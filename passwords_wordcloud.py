@@ -5,7 +5,7 @@ from io import BytesIO
 
 import dash
 import matplotlib
-import multidict as multidict
+
 
 
 import numpy as np
@@ -32,9 +32,9 @@ for index, row in df.iterrows():
 
 
 
-x, y = np.ogrid[:1000, :1000]
+x, y = np.ogrid[:2000, :2000]
 
-mask = (x - 500) ** 2 + (y - 500) ** 2 > 400 ** 2
+mask = (x - 1000) ** 2 + (y - 1000) ** 2 > 1000 ** 2
 mask = 255 * mask.astype(int)
 
 
@@ -42,7 +42,9 @@ mask = 255 * mask.astype(int)
 
 
 word_cloud = WordCloud(collocations = False, background_color="white",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
-
+def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
+    return("hsl(0,100%, 1%)")
+word_cloud.recolor(color_func = black_color_func)
 
 # Creating word_cloud with text as argument in .generate() method
 #word_cloud = WordCloud(collocations = False, background_color = 'white', width=1200, height=1000).generate(text)
