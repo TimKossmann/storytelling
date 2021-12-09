@@ -2,12 +2,8 @@ import dash.dependencies as dd
 import dash_core_components as dcc
 from dash import html
 from io import BytesIO
-
 import dash
 import matplotlib
-
-
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
