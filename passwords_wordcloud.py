@@ -12,42 +12,45 @@ from wordcloud import WordCloud
 import wordcloud
 
 
+class Chart_WordCloud():
+    
+    def __init__(self):
+        self.df = pd.read_excel("./datasets/Passwords.xlsx") # Excel einlesen
+        self.word_cloud = None
+        self.create_wordcloud()
+
+    # Wordlcloud erstellen
+    def create_wordcloud(self):
+        self.df.isna().sum()
+        text = {}
+
+        for index, row in self.df.iterrows():
+            text[str(row["Password"])] = row["size"]
+
+
+
+        x, y = np.ogrid[:2000, :2000]
+
+        mask = (x - 1000) ** 2 + (y - 1000) ** 2 > 1000 ** 2
+        mask = 255 * mask.astype(int)
 
 
 
 
-df = pd.read_excel("./datasets/Passwords.xlsx")
 
-print(df.head())
+        self.word_cloud = WordCloud(collocations = False, background_color="white",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
+        def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
+            return("hsl(0,100%, 1%)")
+        self.word_cloud.recolor(color_func = black_color_func)
 
-df.isna().sum()
-text = {}
+        # Creating word_cloud with text as argument in .generate() method
+        #word_cloud = WordCloud(collocations = False, background_color = 'white', width=1200, height=1000).generate(text)
+        # Display the generated Word Cloud
+        plt.imshow(self.word_cloud, interpolation='bilinear')
+        plt.axis("off")
 
-for index, row in df.iterrows():
-    text[str(row["Password"])] = row["size"]
-
-
-
-x, y = np.ogrid[:2000, :2000]
-
-mask = (x - 1000) ** 2 + (y - 1000) ** 2 > 1000 ** 2
-mask = 255 * mask.astype(int)
-
-
-
-
-
-word_cloud = WordCloud(collocations = False, background_color="white",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
-def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
-    return("hsl(0,100%, 1%)")
-word_cloud.recolor(color_func = black_color_func)
-
-# Creating word_cloud with text as argument in .generate() method
-#word_cloud = WordCloud(collocations = False, background_color = 'white', width=1200, height=1000).generate(text)
-# Display the generated Word Cloud
-plt.imshow(word_cloud, interpolation='bilinear')
-plt.axis("off")
-plt.show()
+        return self.word_cloud.to_image()
+        
 
 
 
