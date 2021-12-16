@@ -8,12 +8,53 @@ import pandas as pd
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches 
 from passwords_wordcloud import Chart_WordCloud
 
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
 dbr = Charts_DataBreaches() # Klasse Charts_DataBreaches aufrufen
 wc = Chart_WordCloud() # Klasse Chart_WordCloud aufrufen
  
 app = dash.Dash(__name__)
 
-app.layout = html.Div([
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
+app.layout = html.Div(style={'backroudColor': 'green'}, children=[
+    html.Div([
+        html.Header(children=[
+            html.Title(
+                children='Hier sollte der Titel stehen',
+                 style={
+                    'textAlign': 'left ',
+                    'color': 'purple'
+                }
+            ),
+            html.H1(
+                children='Welcome to LaCTiS',
+                 style={
+                    'textAlign': 'left ',
+                    'color': 'purple'
+                }
+            ),
+            html.H1(
+                children='Test',
+                style={
+                    'textAlign': 'center',
+                    'color': 'blue'
+                }
+            )
+        ]),
+        html.Body(children=[
+            html.H2(
+                children='Hier steht wohl noch nix im Body',
+                style={
+                    'textAlign': 'center',
+                    'color': 'purple'
+                }
+            )
+        ]),    
+    ]),
     dcc.Graph(id='graph-with-slider'),
     dcc.Slider(
         id='year-slider',
@@ -28,7 +69,9 @@ app.layout = html.Div([
     ])
 ])
 
-
+app.css.append_css({
+    "external_url":"https://codepen.io/chriddyp/pen/bWLwgP.css"
+})
 
 
 @app.callback(
@@ -41,7 +84,7 @@ def update_figure(selected_year):
     dash.dependencies.Output('wordcloud', 'src'),
     Input('wordcloud', 'img')
 )
-def make_wordlcloud():
+def make_wordlcloud(img):
     return wc.create_wordcloud()
 
 

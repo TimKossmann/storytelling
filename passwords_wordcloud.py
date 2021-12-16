@@ -1,6 +1,5 @@
 import dash.dependencies as dd
-import dash_core_components as dcc
-from dash import html
+from dash import html, dcc
 from io import BytesIO
 import dash
 import matplotlib
@@ -29,9 +28,9 @@ class Chart_WordCloud():
 
 
 
-        x, y = np.ogrid[:2000, :2000]
+        x, y = np.ogrid[:250, :250]
 
-        mask = (x - 1000) ** 2 + (y - 1000) ** 2 > 1000 ** 2
+        mask = (x - 125) ** 2 + (y - 125) ** 2 > 125 ** 2
         mask = 255 * mask.astype(int)
 
 
