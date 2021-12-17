@@ -23,39 +23,55 @@ colors = {
 app.layout = html.Div(style={'backroudColor': 'green'}, children=[
     html.Div([
         html.Header(children=[
-            html.Title(
-                children='Hier sollte der Titel stehen',
-                 style={
-                    'textAlign': 'left ',
-                    'color': 'purple'
-                }
+            html.Div(
+                id="app-header",
+                children=[
+                    html.H1(
+                        id="app-title",
+                        children='Welcome to LaCTiS',
+                        style={
+                            
+                        }
+                    ),
+            
+                    dcc.Tabs(
+                        id="tabs-container", 
+                        value='tab_databreaches', 
+                        parent_className='custom-tabs',
+
+                        children=[
+                            dcc.Tab(
+                                className="custom-tab", 
+                                label='Schaden durch Hacks', 
+                                value='tab_databreaches',
+                                selected_className='custom-tab--selected'
+                            ),
+                            dcc.Tab(
+                                className="custom-tab", 
+                                label='Hackermethoden', 
+                                value='tab_methods',
+                                selected_className='custom-tab--selected'
+                            ),
+                            dcc.Tab(
+                                className="custom-tab", 
+                                label='Phishing', 
+                                value='tab_phishing',
+                                selected_className='custom-tab--selected'
+                            ),
+                            dcc.Tab(
+                                className="custom-tab", 
+                                label='Passwortsicherheit', 
+                                value='tab_password',
+                                selected_className='custom-tab--selected'
+                            ),
+                        ]
+                    ),  
+                ]
             ),
-            html.H1(
-                children='Welcome to LaCTiS',
-                 style={
-                    'textAlign': 'left ',
-                    'color': 'purple'
-                }
-            ),
-            html.H1(
-                children='Test',
-                style={
-                    'textAlign': 'center',
-                    'color': 'blue'
-                }
-            )
         ]),
-        html.Body(children=[
-            html.H2(
-                children='Hier steht wohl noch nix im Body',
-                style={
-                    'textAlign': 'center',
-                    'color': 'purple'
-                }
-            )
-        ]),    
+           
     ]),
-    dcc.Graph(id='graph-with-slider'),
+    dcc.Graph(className="graph", id='graph-with-slider'),
     dcc.Slider(
         id='year-slider',
         min=dbr.df['year'].max() - 10 ,

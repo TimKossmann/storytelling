@@ -1,0 +1,45 @@
+body {
+    font-family: sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #2C3A49;
+    text-align: center;
+}
+
+#app-header {
+    width: 100%;
+    align-content: center;
+}
+
+#tabs-container {
+    width: 70%;
+    
+}
+
+.custom-tabs {
+    align-items: center;
+}
+
+.custom-tab {
+    background-color: transparent !important;
+    justify-content: center;
+    padding: 12px !important;
+    border-color: transparent !important;
+}
+
+.custom-tab--selected {
+    color: black;
+    box-shadow: 1px 1px 0px white;
+    border-top: 3px solid #e36209 !important;
+}
+
+
+#graph-with-slider {
+    background-color: #2C3A49;
+}
+
+
+.app-header .app-header--title {
+    font-size: 22px;
+    padding-left: 5px;
+}
