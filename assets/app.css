@@ -1,3 +1,7 @@
+:root {
+    --main-bg-colors: white;
+}
+
 body {
     font-family: sans-serif;
 }
@@ -9,6 +13,35 @@ h1, h2, h3, h4, h5, h6 {
 #app-header {
     width: 100%;
     align-content: center;
+}
+
+#wrapper {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 100px;
+    grid-auto-rows: minmax(500px, auto);
+      
+}
+
+#left-side {
+    margin-left: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+    align-items: center;
+    grid-column: 1;
+}
+
+#right-side {
+    margin-right: 50px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-align: center;
+    grid-column: 2;
+
+}
+
+#wordcloud {
+    height: 100%;
 }
 
 #tabs-container {
@@ -43,3 +76,25 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 22px;
     padding-left: 5px;
 }
+
+.rc-slider-track {
+    background-color: red;
+  }
+  
+  .rc-slider-dot-active {  
+    border-color: red;
+    border: solid 2px red;
+  }
+  
+  .rc-slider-handle {
+    background-color: red;
+    border-color: red;
+  }
+  
+  .rc-slider-handle:hover {
+    border-color: red;
+  }
+  
+  .rc-slider-handle-active:active {
+    border-color: red;
+  }

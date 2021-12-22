@@ -69,20 +69,44 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
                 ]
             ),
         ]),
+        html.Div(
+            id="wrapper",
+            children=[
+            html.Div(
+                id="left-side",
+                children=[
+                dcc.Graph(className="graph", id='graph-with-slider'),
+                dcc.Slider(
+                    id='year-slider',
+                    min=dbr.df['year'].max() - 10 ,
+                    max=dbr.df['year'].max(),
+                    value=dbr.df['year'].max(),
+                    marks={str(year): str(year) for year in dbr.df['year'].unique()},
+                    step=None
+                ),
+            ]),
+            html.Div(
+                id="right-side",
+                children=[
+                    dcc.Graph(className="graph", id='graph-with-slider2'),
+                dcc.Slider(
+                    id='year-slider2',
+                    min=dbr.df['year'].max() - 10 ,
+                    max=dbr.df['year'].max(),
+                    value=dbr.df['year'].max(),
+                    marks={str(year): str(year) for year in dbr.df['year'].unique()},
+                    step=None
+                ),
+                #html.Img(id = 'wordcloud')
+                
+            ]),
+            
+
+        ])
            
     ]),
-    dcc.Graph(className="graph", id='graph-with-slider'),
-    dcc.Slider(
-        id='year-slider',
-        min=dbr.df['year'].max() - 10 ,
-        max=dbr.df['year'].max(),
-        value=dbr.df['year'].max(),
-        marks={str(year): str(year) for year in dbr.df['year'].unique()},
-        step=None
-    ),
-    html.Div([
-        html.Img(id = 'wordcloud')
-    ])
+
+   
 ])
 
 app.css.append_css({
@@ -95,6 +119,13 @@ app.css.append_css({
     Input('year-slider', 'value'))
 def update_figure(selected_year):
     return dbr.update_bubblechart_by_year(selected_year)
+
+@app.callback(
+    Output('graph-with-slider2', 'figure'),
+    Input('year-slider2', 'value'))
+def update_figure(selected_year):
+    return dbr.update_bubblechart_by_year(selected_year)
+
 
 @app.callback(
     dash.dependencies.Output('wordcloud', 'src'),
