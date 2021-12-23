@@ -58,7 +58,7 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
     dcc.Graph(id='graph-with-slider'),
     dcc.Slider(
         id='year-slider',
-        min=dbr.df['year'].max() - 10 ,
+        min=dbr.df['year'].max() - 15 ,
         max=dbr.df['year'].max(),
         value=dbr.df['year'].max(),
         marks={str(year): str(year) for year in dbr.df['year'].unique()},
