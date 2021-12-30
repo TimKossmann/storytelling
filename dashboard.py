@@ -7,6 +7,7 @@ import pandas as pd
 
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches 
 from passwords_wordcloud import Chart_WordCloud
+from tab_pages.password import PasswordPage
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -14,6 +15,7 @@ dbr = Charts_DataBreaches() # Klasse Charts_DataBreaches aufrufen
 wc = Chart_WordCloud() # Klasse Chart_WordCloud aufrufen
  
 app = dash.Dash(__name__)
+pp = PasswordPage(app)
 
 colors = {
     'background': '#111111',
@@ -69,7 +71,49 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
                 ]
             ),
         ]),
-        html.Div(
+        html.Div(id="tabs-content")
+    ]),
+
+   
+])
+
+app.css.append_css({
+    "external_url":"https://codepen.io/chriddyp/pen/bWLwgP.css"
+})
+
+
+@app.callback(Output('tabs-content', 'children'),
+              Input('tabs-container', 'value'))
+def render_content(tab):
+    if tab == 'tab_password':
+        return pp.get_layout()
+    
+
+@app.callback(
+    Output('graph-with-slider', 'figure'),
+    Input('year-slider', 'value'))
+def update_figure(selected_year):
+    return dbr.update_bubblechart_by_year(selected_year)
+
+@app.callback(
+    Output('graph-with-slider2', 'figure'),
+    Input('year-slider2', 'value'))
+def update_figure(selected_year):
+    return dbr.update_bubblechart_by_year(selected_year)
+
+
+@app.callback(
+    dash.dependencies.Output('wordcloud', 'src'),
+    Input('wordcloud', 'img')
+)
+def make_wordlcloud(img):
+    return wc.create_wordcloud()
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+
+"""html.Div(
             id="wrapper",
             children=[
             html.Div(
@@ -102,38 +146,4 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
             ]),
             
 
-        ])
-           
-    ]),
-
-   
-])
-
-app.css.append_css({
-    "external_url":"https://codepen.io/chriddyp/pen/bWLwgP.css"
-})
-
-
-@app.callback(
-    Output('graph-with-slider', 'figure'),
-    Input('year-slider', 'value'))
-def update_figure(selected_year):
-    return dbr.update_bubblechart_by_year(selected_year)
-
-@app.callback(
-    Output('graph-with-slider2', 'figure'),
-    Input('year-slider2', 'value'))
-def update_figure(selected_year):
-    return dbr.update_bubblechart_by_year(selected_year)
-
-
-@app.callback(
-    dash.dependencies.Output('wordcloud', 'src'),
-    Input('wordcloud', 'img')
-)
-def make_wordlcloud(img):
-    return wc.create_wordcloud()
-
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
+        ])"""

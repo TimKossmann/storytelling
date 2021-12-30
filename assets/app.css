@@ -15,21 +15,23 @@ h1, h2, h3, h4, h5, h6 {
     align-content: center;
 }
 
-#wrapper {
+.wrapper {
     margin-top: 50px;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 100px;
-    grid-auto-rows: minmax(500px, auto);
       
 }
 
 #left-side {
     margin-left: 50px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+    transition: 0.3s;
     align-items: center;
+    align-content: center;
     grid-column: 1;
+    text-align: center;
+
 }
 
 #right-side {
@@ -40,9 +42,6 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
-#wordcloud {
-    height: 100%;
-}
 
 #tabs-container {
     width: 70%;
