@@ -87,7 +87,26 @@ app.css.append_css({
 def render_content(tab):
     if tab == 'tab_password':
         return pp.get_layout()
-    
+
+
+
+############# Password-Tab #############
+
+@app.callback(
+    dash.dependencies.Output('wordcloud', 'src'),
+    Input('wordcloud', 'img')
+)
+def make_wordlcloud(img):
+    print("wordcloud")
+    return wc.create_wordcloud()
+
+@app.callback(
+    Output('hallo', 'children'),
+    Input('my-input', 'value')
+)
+def update_output_div(input_value):
+    return html.H3(["Output: " + input_value])#{}".format(input_value)
+
 
 @app.callback(
     Output('graph-with-slider', 'figure'),
@@ -102,12 +121,7 @@ def update_figure(selected_year):
     return dbr.update_bubblechart_by_year(selected_year)
 
 
-@app.callback(
-    dash.dependencies.Output('wordcloud', 'src'),
-    Input('wordcloud', 'img')
-)
-def make_wordlcloud(img):
-    return wc.create_wordcloud()
+
 
 
 if __name__ == '__main__':

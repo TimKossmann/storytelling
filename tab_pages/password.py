@@ -8,21 +8,8 @@ class PasswordPage():
         self.app = app
         self.wc = Chart_WordCloud()
 
-    def get_layout(self): 
-        @self.app.callback(
-            dash.dependencies.Output('wordcloud', 'src'),
-            Input('wordcloud', 'img')
-        )
-        def make_wordlcloud(img):
-            return self.wc.create_wordcloud()
+    def get_layout(self):
         
-        @self.app.callback(
-            dash.dependencies.Output('hallo', 'children'),
-            Input('my-input', 'value')
-        )
-        def update_output_div(input_value):
-            return "Output: "#{}".format(input_value)
-
         return html.Div(
                 id="password-wrapper",
                 className="wrapper",
@@ -37,12 +24,11 @@ class PasswordPage():
                     html.Div(
                         id="right-side",
                         children=[
-                            html.H6("Change the value in the text box to see callbacks in action!"),
+                            html.H6("Gib dein Passwort ein und berechne wie lange ein moderner Computer braucht es zu knacken"),
                             html.Div([
-                                "Input: ",
-                                dcc.Input(id='my-input', value='hallo', type='text')
+                                dcc.Input(id='my-input', value='', type='text')
                             ]),
-                            html.Div(id='hallo'),
+                            html.Div(id='hallo', children=html.H3(["hi"])),
                         ]
                     )         
                 ]
