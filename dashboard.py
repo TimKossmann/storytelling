@@ -7,15 +7,19 @@ import pandas as pd
 
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches 
 from passwords_wordcloud import Chart_WordCloud
+from data_breaches_attack_vectors_treemap import Chart_AttackVectors
+from tab_pages.data_breaches_attack_vectors import AttackVectorsPage
 from tab_pages.password import PasswordPage
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 dbr = Charts_DataBreaches() # Klasse Charts_DataBreaches aufrufen
 wc = Chart_WordCloud() # Klasse Chart_WordCloud aufrufen
+atp = Chart_AttackVectors# Klasse Chart_AttackVectors aufrufen
  
 app = dash.Dash(__name__)
 pp = PasswordPage(app)
+dbav = AttackVectorsPage(app) 
 
 colors = {
     'background': '#111111',
@@ -73,20 +77,7 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
         ]),
         html.Div(id="tabs-content")
     ]),
-    dcc.Graph(id='graph-with-slider'),
-    dcc.Slider(
-        id='year-slider',
-        min=dbr.df['year'].max() - 15 ,
-        max=dbr.df['year'].max(),
-        value=dbr.df['year'].max(),
-        marks={str(year): str(year) for year in dbr.df['year'].unique()},
-        step=None
-    ),
-    html.Div([
-        html.Img(id = 'wordcloud')
-    ])
-
-   
+     
 ])
 
 app.css.append_css({
@@ -99,8 +90,15 @@ app.css.append_css({
 def render_content(tab):
     if tab == 'tab_password':
         return pp.get_layout()
+    elif tab == 'tab_methods':
+        return dbav.get_layout()
 
-
+############# Hackermethoden/AttackVectors-Tab #############
+@app.callback(
+    Output('basic-interactions', 'figure'),
+    Input('basic-interactions', 'clickData'))
+def display_click_data(clickData):
+    return atp.create_treemap()
 
 ############# Password-Tab #############
 
