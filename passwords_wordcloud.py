@@ -28,9 +28,9 @@ class Chart_WordCloud():
 
 
 
-        x, y = np.ogrid[:250, :250]
+        x, y = np.ogrid[:500, :500]
 
-        mask = (x - 125) ** 2 + (y - 125) ** 2 > 125 ** 2
+        mask = (x - 250) ** 2 + (y - 250) ** 2 > 250 ** 2
         mask = 255 * mask.astype(int)
 
 
