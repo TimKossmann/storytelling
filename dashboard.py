@@ -82,6 +82,7 @@ app.css.append_css({
 })
 
 
+
 @app.callback(Output('tabs-content', 'children'),
               Input('tabs-container', 'value'))
 def render_content(tab):
@@ -100,12 +101,12 @@ def make_wordlcloud(img):
     print("wordcloud")
     return wc.create_wordcloud()
 
-@app.callback(
-    Output('hallo', 'children'),
+@app.callback(   
+    Output('pw-analyse', 'children'),
     Input('my-input', 'value')
 )
 def update_output_div(input_value):
-    return html.H3(["Output: " + input_value])#{}".format(input_value)
+    return pp.get_pw_analyse(input_value)
 
 
 @app.callback(
