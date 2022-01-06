@@ -8,6 +8,10 @@ class AttackVectorsPage():
         self.app = app
         self.atp = Chart_AttackVectors()
 
+
+    def get_information_attackVectors(self, vector):
+        return self.atp.get_information_attackVectors(vector)
+
     def get_layout(self):
         
         return html.Div(
@@ -37,7 +41,9 @@ class AttackVectorsPage():
                     html.Div(
                         id="right-side",
                         children=[
-                            html.H6("Informationen über Angriffspunkte für Cyber Attacken"), 
+                            html.H6("Informationen über Angriffspunkte für Cyber Attacken"),
+                            html.Div(id='name-attack'),
+                            html.Div(id='info-attack'),
                         ]
                     )         
                 ]

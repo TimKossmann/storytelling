@@ -99,6 +99,12 @@ def render_content(tab):
     Input('basic-interactions', 'clickData'))
 def display_click_data(clickData):
     return atp.create_treemap()
+@app.callback(
+    Output('info-attack', 'value'),
+    Input('basic-interactions', 'clickData'))
+def display_attackVectors(clickData):
+    return atp.get_information_attackVectors(clickData)
+
 
 ############# Password-Tab #############
 

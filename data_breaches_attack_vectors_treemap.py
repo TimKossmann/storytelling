@@ -32,7 +32,8 @@ class Chart_AttackVectors():
         self.fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
         self.fig.update_traces(root_color="lightgrey", marker_coloraxis=None)
 
-    def get_information_attackVectors():
+    def get_information_attackVectors(self, vector):
+        return self.df['Information'].values[vector]
 
         
 
