@@ -26,6 +26,8 @@ class PasswordPage():
         return False
 
     def calculate_pw_strength(self, pw):
+        if (pw == ""):
+            return
         
         pw_per_second = 100000000000
 
@@ -88,6 +90,29 @@ class PasswordPage():
             html.Div(["Kleinbuchstaben: ", html.B([lc_text])]),
             html.Div(["Großbuchstaben: ", html.B([uc_text])]),
             html.Div(["Sonderzeichen: ", html.B([sc_text])]),
+            html.Br(),
+            html.Br(),
+            html.Div(
+                id="time-to-crack-minutes",
+                children=[
+                    html.Div(className="time-day",children=["Stunden: " + str(self.hours)]),
+                    html.Div(className="time-day",children=["Minuten: " + str(self.minutes)]),
+                    html.Div(className="time-day",children=["Sekunden: " + ("%.4f" % self.seconds)]),
+                ]
+            ),
+            html.Br(),
+            html.Br(),
+
+            html.Div(
+                id="time-to-crack",
+                children=[
+                    html.Div(className="time",children=["Jahre: " + str(self.years)]),
+                    html.Div(className="time",children=["Monate: " + str(self.months)]),
+                    html.Div(className="time",children=["Wochen: " + str(self.weeks)]),
+                    html.Div(className="time",children=["Tage: " + str(self.days)]),
+                ]
+            ),
+            
             ]
         )
 

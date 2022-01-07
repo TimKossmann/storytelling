@@ -42,9 +42,21 @@ h1, h2, h3, h4, h5, h6 {
 
 }
 
+#time-to-crack-minutes{
+    background-color: green;
+}
 
-#analyse-container {
-    align-content: space-around;
+
+.time {
+    flex-wrap: wrap;
+    float: left;
+    width: 25%;
+}
+
+.time-day {
+    flex-wrap: wrap;
+    float: left;
+    width: 33%;
 }
 
 #tabs-container {
