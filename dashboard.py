@@ -10,6 +10,7 @@ from passwords_wordcloud import Chart_WordCloud
 from data_breaches_attack_vectors_treemap import Chart_AttackVectors
 from tab_pages.data_breaches_attack_vectors import AttackVectorsPage
 from tab_pages.password import PasswordPage
+from tab_pages.data_breaches_costs import DataBreachesPage
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -20,6 +21,7 @@ atp = Chart_AttackVectors# Klasse Chart_AttackVectors aufrufen
 app = dash.Dash(__name__)
 pp = PasswordPage(app)
 dbav = AttackVectorsPage(app) 
+dbp = DataBreachesPage(app)
 
 colors = {
     'background': '#111111',
@@ -92,6 +94,22 @@ def render_content(tab):
         return pp.get_layout()
     elif tab == 'tab_methods':
         return dbav.get_layout()
+    elif tab == 'tab_databreaches':
+        return dbp.get_layout()
+
+############# DataBreaches-Tab #############################
+@app.callback(
+    Output('graph-with-slider', 'figure'),
+    Input('year-slider', 'value'))
+def update_figure(selected_year):
+    print(selected_year)
+    return dbp.update_bubblechart_by_year(selected_year)
+
+@app.callback(
+    Output('graph-with-slider2', 'figure'),
+    Input('year-slider2', 'value'))
+def update_figure(selected_year):
+    return dbp.update_bubblechart_by_year(selected_year)
 
 ############# Hackermethoden/AttackVectors-Tab #############
 @app.callback(
@@ -99,11 +117,22 @@ def render_content(tab):
     Input('basic-interactions', 'clickData'))
 def display_click_data(clickData):
     return atp.create_treemap()
+
 @app.callback(
-    Output('info-attack', 'value'),
+    Output('name-attack', 'children'),
     Input('basic-interactions', 'clickData'))
 def display_attackVectors(clickData):
-    return atp.get_information_attackVectors(clickData)
+    print(clickData['points'][0]['label'])
+    return (clickData['points'][0]['label'])
+    
+        
+
+@app.callback(
+    Output('info-attack', 'children'),
+    Input('basic-interactions', 'clickData'))
+def display_attackVectors(clickData):
+    return dbav.get_information_attackVectors(clickData)
+    
 
 
 ############# Password-Tab #############
@@ -124,17 +153,7 @@ def update_output_div(input_value):
     return html.H3(["Output: " + input_value])#{}".format(input_value)
 
 
-@app.callback(
-    Output('graph-with-slider', 'figure'),
-    Input('year-slider', 'value'))
-def update_figure(selected_year):
-    return dbr.update_bubblechart_by_year(selected_year)
 
-@app.callback(
-    Output('graph-with-slider2', 'figure'),
-    Input('year-slider2', 'value'))
-def update_figure(selected_year):
-    return dbr.update_bubblechart_by_year(selected_year)
 
 
 
