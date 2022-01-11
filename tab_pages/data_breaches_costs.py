@@ -11,7 +11,8 @@ class DataBreachesPage():
     def update_bubblechart_by_year(self, year):
         return self.dbr.update_bubblechart_by_year(year)
 
-   
+    def create_lineplot(self, year):
+        return self.dbr.create_lineplot(year)
     
     def get_layout(self):
         
@@ -24,7 +25,7 @@ class DataBreachesPage():
                             dcc.Graph(className="graph", id='graph-with-slider'),
                             dcc.Slider(
                             id='year-slider',
-                            min=self.dbr.df['year'].max() - 10 ,
+                            min=self.dbr.df['year'].max() - 7 ,
                             max=self.dbr.df['year'].max(),
                             value=self.dbr.df['year'].max(),
                             marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
@@ -39,7 +40,7 @@ class DataBreachesPage():
                             dcc.Graph(className="graph", id='graph-with-slider2'),
                             dcc.Slider(
                             id='year-slider2',
-                            min=self.dbr.df['year'].max() - 10 ,
+                            min=self.dbr.df['year'].max() - 7 ,
                             max=self.dbr.df['year'].max(),
                             value=self.dbr.df['year'].max(),
                             marks={str(year): str(year) for year in self.dbr.df['year'].unique()},

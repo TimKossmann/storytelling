@@ -107,9 +107,9 @@ def update_figure(selected_year):
 
 @app.callback(
     Output('graph-with-slider2', 'figure'),
-    Input('year-slider2', 'value'))
-def update_figure(selected_year):
-    return dbp.update_bubblechart_by_year(selected_year)
+    Input('year-slider', 'value'))
+def update_figure2(selected_year):
+    return dbp.create_lineplot(selected_year)
 
 ############# Hackermethoden/AttackVectors-Tab #############
 @app.callback(

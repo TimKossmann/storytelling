@@ -25,12 +25,103 @@ class Charts_DataBreaches():
         self.df["year"] = self.df["year"].astype("int") # Umwandlung des Datentyps von Year von Object in Integer mit der typecasting_from_column-Methode
         self.df["records lost"] = pd.to_numeric(self.df["records lost"]) # Umwandlung des Datentyps von records lost von Object in numeric
         self.df["organisation"] = self.df["organisation"].astype("string") # Umwandlung des Datentyps von Organisation von Object in string
-        for x in range( 2005, 2022):
-            self.df['organisation_name'] = np.where((self.df['year'] == x) & (self.df['records lost'] >= self.df['records lost'].max()*0.005), self.df['organisation'], '')
-            print('das Jahr:' , x)
+        self.df['organisation_name'] = ''
+        for x in range( 2004, 2022):
+            self.df['organisation_name'] = np.where((self.df['year'] == x) & (self.df['records lost'] >= self.df['records lost'].max()*0.1), self.df['organisation'], self.df['organisation_name'])
         
-        
-    
+    # Linien-Diagramm erstellen 
+    def create_lineplot(self, year):   
+        self.df_fig1 = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum().reset_index())
+        self.fig = px.line(self.df_fig1, x="year", y="records lost", 
+                        labels={
+                        "year": "Jahre",
+                        "records lost": "",
+
+                        },
+                        
+
+                        title='Testtitle', markers=True)
+
+        self.fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =10)
+        self.fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="black")
+        self.fig.update_layout(
+            title={
+                'text': "Plot Title",
+                'y':0.87,
+                'x':0.0,
+                'xref': "paper",
+                'xanchor': 'left',
+                'yanchor': 'top'},
+            plot_bgcolor = "rgba(0,0,0,0)",
+            paper_bgcolor = "rgba(255,255,255,1)",
+ 
+            xaxis= dict(
+                range=[self.df['year'].max() - 15 - 0.5, self.df['year'].max() + 0.5],
+                dtick= 1,
+                ticks = "outside",
+                tickwidth = 1,
+                tickcolor = "black",
+                ticklen = 8,
+                tickfont = dict(family = 'Arial', size = 14),
+                showline = True,
+                linewidth = 1,
+                linecolor = 'black',
+                
+                
+
+                
+                ),
+            yaxis = dict(
+                range=[0, self.df_fig1['records lost'].max()*1.2],
+                ticks = "outside",
+                tickwidth = 1,
+                tickcolor = "black",
+                ticklen = 8,
+                ticklabelposition="outside",
+                showline = True,
+                linewidth = 1,
+                linecolor = 'black',
+                
+                ),
+            )
+
+        self.fig.update_traces(
+            marker = dict(
+                color = 'LightSkyBlue',
+                size = 10,
+                opacity = 0.8,
+            ),
+            line = dict(
+                color = 'LightSkyBlue',
+                width = 2
+            ),
+        )
+
+        self.fig.add_annotation(x=0,y=1.1,
+
+                        text="entstandener Schaden (in US$)", #textangle=-90,
+                            xref="paper",
+                            valign="top",
+            yref="y domain", showarrow=False)
+
+
+
+        self.fig2 = px.scatter(self.df_fig1.iloc[[year]], x="year", y="records lost")
+
+
+        self.fig2.update_traces(
+            marker = dict(
+                color = 'pink',
+                size = 15,
+                opacity = 0.5,
+                
+
+            ),
+        )
+
+        self.fig.add_trace(self.fig2.data[0])
+
+
     # Balken-Diagramm erstellen
     def create_barplot(self):
         self.fig_barplot = px.bar(self.df, x="year", y='records lost', color='sector')
