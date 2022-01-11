@@ -26,9 +26,19 @@ class Charts_DataBreaches():
         self.df["records lost"] = pd.to_numeric(self.df["records lost"]) # Umwandlung des Datentyps von records lost von Object in numeric
         self.df["organisation"] = self.df["organisation"].astype("string") # Umwandlung des Datentyps von Organisation von Object in string
         self.df['organisation_name'] = ''
-        for x in range( 2004, 2022):
-            self.df['organisation_name'] = np.where((self.df['year'] == x) & (self.df['records lost'] >= self.df['records lost'].max()*0.1), self.df['organisation'], self.df['organisation_name'])
-        
+        for year in range( 2004, 2022):
+            self.df['organisation_name'] = np.where((self.df['year'] == year) & (self.df['records lost'] >= self.df['records lost'].max()*0.1), self.df['organisation'], self.df['organisation_name'])
+            for month in range(1, 13):
+                date = str(year) + '-' + str(month).zfill(2) + '-01'
+
+                new_df = self.df.loc[(self.df["date"] == date)]
+
+                step = 30//(new_df.shape[0]+1)
+                start = 0
+                for index, row in new_df.iterrows():
+                    self.df.loc[index, 'date'] = '%s-%s-%s' % (year, str(month).zfill(2), str(start+step).zfill(2))
+                    start += step
+
     # Linien-Diagramm erstellen 
     def create_lineplot(self, year):   
         self.df_fig1 = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum().reset_index())
@@ -42,7 +52,7 @@ class Charts_DataBreaches():
 
                         title='Testtitle', markers=True)
 
-        self.fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =10)
+        self.fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =8)
         self.fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="black")
         self.fig.update_layout(
             title={
@@ -56,7 +66,7 @@ class Charts_DataBreaches():
             paper_bgcolor = "rgba(255,255,255,1)",
  
             xaxis= dict(
-                range=[self.df['year'].max() - 15 - 0.5, self.df['year'].max() + 0.5],
+                range=[self.df['year'].max() - 8.5, self.df['year'].max() + 0.5],
                 dtick= 1,
                 ticks = "outside",
                 tickwidth = 1,
