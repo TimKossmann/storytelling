@@ -1,3 +1,4 @@
+from numpy.core.fromnumeric import size
 import plotly.express as px
 from PIL import Image 
 
@@ -22,9 +23,18 @@ class Phishing_Graphs():
             dict(
                 source=img,
                 xref="paper", yref="paper",
-                x=0.5, y=0.5,
+                x=0.5, y=0.6,
                 sizex=0.3, sizey=0.3,
+                xanchor="center", yanchor="middle"
             )
+        )
+        fig.add_annotation(
+            text="Link", 
+            xref="paper", 
+            yref="paper",
+            x=0.5, y=0.5,
+            size=28,
+            showarrow=False
         )
         fig.update_traces(textinfo='none')
         fig.layout.update(showlegend=False)
