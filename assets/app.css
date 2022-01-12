@@ -46,6 +46,22 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+#time-to-crack-minutes{
+    background-color: green;
+}
+
+
+.time {
+    flex-wrap: wrap;
+    float: left;
+    width: 25%;
+}
+
+.time-day {
+    flex-wrap: wrap;
+    float: left;
+    width: 33%;
+}
 
 #tabs-container {
     width: 70%;
