@@ -11,6 +11,7 @@ from data_breaches_attack_vectors_treemap import Chart_AttackVectors
 from tab_pages.data_breaches_attack_vectors import AttackVectorsPage
 from tab_pages.password import PasswordPage
 from tab_pages.data_breaches_costs import DataBreachesPage
+import tab_pages.phishing as ph
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -22,6 +23,7 @@ app = dash.Dash(__name__)
 pp = PasswordPage(app)
 dbav = AttackVectorsPage(app) 
 dbp = DataBreachesPage(app)
+phishing = ph.PhishingPage() 
 
 colors = {
     'background': '#111111',
@@ -77,6 +79,7 @@ app.layout = html.Div(style={'backroudColor': 'green'}, children=[
                 ]
             ),
         ]),
+        html.Br(),html.Br(),html.Br(),
         html.Div(id="tabs-content")
     ]),
      
@@ -97,6 +100,8 @@ def render_content(tab):
         return dbav.get_layout()
     elif tab == 'tab_databreaches':
         return dbp.get_layout()
+    elif tab == 'tab_phishing':
+        return phishing.get_layout()
 
 ############# DataBreaches-Tab #############################
 @app.callback(
@@ -107,7 +112,7 @@ def update_figure(selected_year):
     return dbp.update_bubblechart_by_year(selected_year)
 
 @app.callback(
-    Output('graph-with-slider2', 'figure'),
+    Output('year-line-chart', 'figure'),
     Input('year-slider', 'value'))
 def update_figure2(selected_year):
     return dbp.create_lineplot(selected_year)

@@ -1,3 +1,4 @@
+import re
 import plotly.express as px
 import dash
 import pandas as pd 
@@ -41,20 +42,22 @@ class Charts_DataBreaches():
 
     # Linien-Diagramm erstellen 
     def create_lineplot(self, year):   
-        self.df_fig1 = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum().reset_index())
-        self.fig = px.line(self.df_fig1, x="year", y="records lost", 
-                        labels={
-                        "year": "Jahre",
-                        "records lost": "",
+        df_fig1 = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum().reset_index())
+        df_fig1 = df_fig1.loc[df_fig1["year"]>= 2014]
+        # print(df_fig1.head())
+        fig = px.line(df_fig1, x="year", y="records lost", 
+                                labels={
+                                "year": "Jahre",
+                                "records lost": "",
 
-                        },
-                        
+                                },
+                                
 
-                        title='Testtitle', markers=True)
+                                title='Testtitle', markers=True)
 
-        self.fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =8)
-        self.fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="black")
-        self.fig.update_layout(
+        fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =10)
+        fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="black")
+        fig.update_layout(
             title={
                 'text': "Plot Title",
                 'y':0.87,
@@ -64,9 +67,9 @@ class Charts_DataBreaches():
                 'yanchor': 'top'},
             plot_bgcolor = "rgba(0,0,0,0)",
             paper_bgcolor = "rgba(255,255,255,1)",
- 
+        
             xaxis= dict(
-                range=[self.df['year'].max() - 8.5, self.df['year'].max() + 0.5],
+                range=[self.df['year'].max() - 7 - 0.5, self.df['year'].max() + 0.5],
                 dtick= 1,
                 ticks = "outside",
                 tickwidth = 1,
@@ -82,7 +85,7 @@ class Charts_DataBreaches():
                 
                 ),
             yaxis = dict(
-                range=[0, self.df_fig1['records lost'].max()*1.2],
+                range=[0, df_fig1['records lost'].max()*1.2],
                 ticks = "outside",
                 tickwidth = 1,
                 tickcolor = "black",
@@ -95,7 +98,7 @@ class Charts_DataBreaches():
                 ),
             )
 
-        self.fig.update_traces(
+        fig.update_traces(
             marker = dict(
                 color = 'LightSkyBlue',
                 size = 10,
@@ -107,7 +110,7 @@ class Charts_DataBreaches():
             ),
         )
 
-        self.fig.add_annotation(x=0,y=1.1,
+        fig.add_annotation(x=0,y=1.1,
 
                         text="entstandener Schaden (in US$)", #textangle=-90,
                             xref="paper",
@@ -116,10 +119,10 @@ class Charts_DataBreaches():
 
 
 
-        self.fig2 = px.scatter(self.df_fig1.iloc[[year]], x="year", y="records lost")
+        fig2 = px.scatter(df_fig1.loc[df_fig1["year"] == year], x="year", y="records lost")
 
 
-        self.fig2.update_traces(
+        fig2.update_traces(
             marker = dict(
                 color = 'pink',
                 size = 15,
@@ -129,7 +132,9 @@ class Charts_DataBreaches():
             ),
         )
 
-        self.fig.add_trace(self.fig2.data[0])
+        fig.add_trace(fig2.data[0])
+
+        return fig
 
 
     # Balken-Diagramm erstellen
