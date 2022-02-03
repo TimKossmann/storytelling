@@ -37,15 +37,8 @@ class DataBreachesPage():
                     html.Div(id="dataBreach",
                         children=[
                             html.H6("Informationen über ???"),
-                            dcc.Graph(className="graph", id='graph-with-slider2'),
-                            dcc.Slider(
-                            id='year-slider2',
-                            min=self.dbr.df['year'].max() - 7 ,
-                            max=self.dbr.df['year'].max(),
-                            value=self.dbr.df['year'].max(),
-                            marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
-                            step=None
-                            ),
+                            dcc.Graph(className="graph", id='year-line-chart'),
+                            
                         ]
                     )         
                 ]
