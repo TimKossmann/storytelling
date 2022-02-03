@@ -48,6 +48,16 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
 }
 
+#dataBreach {
+    width: 50%;
+    float: left;
+}
+
+#year-overview{
+    width: 50%;
+    float: left;
+}
+
 #time-to-crack-minutes{
     background-color: green;
 }

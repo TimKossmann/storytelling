@@ -42,7 +42,11 @@ class Charts_DataBreaches():
                     start += step
 
     # Linien-Diagramm erstellen 
-    def create_lineplot(self, year):   
+    def create_lineplot(self, year, darkmode=True): 
+        if darkmode:
+            color = "white"
+        else:
+            color = "black"  
         df_fig1 = (pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum()/1000).reset_index())
         df_fig1 = df_fig1.loc[df_fig1["year"]>= 2014]
         # print(df_fig1.head())
@@ -56,8 +60,8 @@ class Charts_DataBreaches():
 
                                 title='Testtitle', markers=True)
 
-        fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="white")
-        fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="white")
+        fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color=color)
+        fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color=color)
         fig.update_layout(
             title={
                 'text': "Plot Title",
@@ -68,7 +72,7 @@ class Charts_DataBreaches():
                 'yanchor': 'top'},
             plot_bgcolor = "rgba(0,0,0,0)",
             paper_bgcolor = "rgba(0,0,0,0)",
-            font_color="white",
+            font_color=color,
 
         
             xaxis= dict(
@@ -76,12 +80,12 @@ class Charts_DataBreaches():
                 dtick= 1,
                 ticks = "outside",
                 tickwidth = 1,
-                tickcolor = "white",
+                tickcolor = color,
                 ticklen = 8,
                 tickfont = dict(family = 'Arial', size = 14),
                 showline = False,
                 linewidth = 1,
-                linecolor = 'white',
+                linecolor = color,
                 
                 
 
@@ -91,12 +95,12 @@ class Charts_DataBreaches():
                 range=[0, df_fig1['records lost'].max()*1.2],
                 ticks = "outside",
                 tickwidth = 1,
-                tickcolor = "white",
+                tickcolor = color,
                 ticklen = 8,
                 ticklabelposition="outside",
                 showline = True,
                 linewidth = 1,
-                linecolor = 'white',
+                linecolor = color,
                 
                 ),
             )
@@ -156,7 +160,12 @@ class Charts_DataBreaches():
         return self.fig_bubblechart
 '''
     # Bubble-Chart erstellen
-    def update_bubblechart_by_year(self, year):
+    def update_bubblechart_by_year(self, year, darkmode=True):
+        if darkmode:
+            color = "white"
+        else:
+            color = "black"
+
         self.fig_bubblechart = px.scatter(self.df[(self.df['year'] == year)], x="date", y="records lost", 
 	        size="records lost", color="organisation",
             hover_name="organisation", size_max=60, text = "organisation_name", 
@@ -175,7 +184,7 @@ class Charts_DataBreaches():
         'yanchor': 'top'},
         plot_bgcolor = "rgba(0,0,0,0)",
         paper_bgcolor = "rgba(0,0,0,0)",
-        font_color="white",
+        font_color=color,
         showlegend = False,
         #uniformtext_minsize = 12 ,
         #uniformtext_mode = 'hide',
@@ -186,12 +195,12 @@ class Charts_DataBreaches():
                     # dtick= 500000,
                     ticks = "outside",
                     tickwidth = 1,
-                    tickcolor = "white",
+                    tickcolor = color,
                     ticklen = 8,
                     tickfont = dict(family = 'Arial', size = 14),
                     showline = True,
                     linewidth = 1,
-                    linecolor = 'white',
+                    linecolor = color,
                     showgrid = False,
                     
                     
@@ -206,12 +215,12 @@ class Charts_DataBreaches():
                     #dtick= 1000000,
                     ticks = "outside",
                     tickwidth = 1,
-                    tickcolor = "white",
+                    tickcolor = color,
                     ticklen = 8,
                     tickfont = dict(family = 'Arial', size = 14),
                     showline = True,
                     linewidth = 1,
-                    linecolor = 'white',
+                    linecolor = color,
                     zeroline = False,
                     showgrid = False,
                     ),
