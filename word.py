@@ -10,13 +10,13 @@ import plotly
 from docx.shared import Pt
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches
 
-
+date = datetime.date.today()
+actual_year = date.strftime("%Y")
 
 #Laden der Diagramme
 dbr = Charts_DataBreaches()
-'''lineplot_png = dbr.fig_barplot.to_image(format="png")
-lineplot_png[:20]'''
 dbr.fig_bubblechart.write_image("fig_bubblechart.png")
+dbr.create_lineplot(int(actual_year) -1).write_image("fig_lineplot.png")
 
 #Dokument laden
 document = Document('LaCTiS_Report - Template.docx')
@@ -28,8 +28,7 @@ font.name = 'Arial'
 font.size = Pt(14)'''
 
 # Überschriften
-date = datetime.date.today()
-actual_year = date.strftime("%Y")
+
 header1 = 'CYBER SECURITY REPORT '
 heading = document.add_heading(header1 + '|' + actual_year, level = 0)
 header2 = document.add_paragraph().add_run('LaCTiS - Your expert in Cyber Security!')
@@ -70,17 +69,19 @@ einleitung.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 document.add_page_break()
 
 # Thema Data Breaches
+document.add_picture('fig_lineplot.png', width=Inches(5.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_1 = document.add_paragraph('Abbildung 1: Data Breaches über x Jahre')
+abbildung_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
 document.add_picture('fig_bubblechart.png', width=Inches(5.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_1 = document.add_paragraph('Abbildung 1: Data Breaches')
-abbildung_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-'''document.add_picture('fig_lineplot.png', width=Inches(5.0))
-last_paragraph = document.paragraphs[-1] 
-last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches')
-abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER'''
+abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+
 
 document.save('LaCTiS_Report.docx')
 
