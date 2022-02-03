@@ -20,7 +20,7 @@ class Chart_WordCloud():
         self.create_wordcloud()
 
     # Wordlcloud erstellen
-    def create_wordcloud(self):
+    def create_wordcloud(self, darkmode=True):
         self.df.isna().sum()
         text = {}
 
@@ -37,11 +37,19 @@ class Chart_WordCloud():
 
 
 
-
-        self.word_cloud = WordCloud(collocations = False, background_color="rgb(7, 37, 66)",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
-        def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
-            return "hsl(0, 100%, 100%)"
-        self.word_cloud.recolor(color_func = black_color_func)
+        if darkmode:
+            color = "rgb(7, 37, 66)"
+        else:
+            color = "rgb(255, 255, 255)"
+        self.word_cloud = WordCloud(collocations = False, background_color=color,width=1920, height=1080, mask=mask).generate_from_frequencies(text)
+        if darkmode:
+            def white_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
+                return "hsl(0, 100%, 100%)"
+            self.word_cloud.recolor(color_func = white_color_func)
+        else: 
+            def blue_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
+                return "hsl(209, 81%, 14%)"
+            self.word_cloud.recolor(color_func = blue_color_func)
 
         # Creating word_cloud with text as argument in .generate() method
         #word_cloud = WordCloud(collocations = False, background_color = 'white', width=1200, height=1000).generate(text)
