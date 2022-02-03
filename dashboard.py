@@ -119,25 +119,25 @@ def update_figure2(selected_year):
 
 ############# Hackermethoden/AttackVectors-Tab #############
 @app.callback(
-    Output('basic-interactions', 'figure'),
-    Input('basic-interactions', 'clickData'))
+    Output('attack-treemap', 'figure'),
+    Input('attack-treemap', 'clickData'))
 def display_click_data(clickData):
     return atp.create_treemap()
 
 @app.callback(
     Output('name-attack', 'children'),
-    Input('basic-interactions', 'clickData'))
+    Input('attack-treemap', 'clickData'))
 def display_attackVectors(clickData):
-    print(clickData['points'][0]['label'])
+    print(clickData)
     return (clickData['points'][0]['label'])
     
         
 
 @app.callback(
     Output('info-attack', 'children'),
-    Input('basic-interactions', 'clickData'))
+    Input('attack-treemap', 'clickData'))
 def display_attackVectors(clickData):
-    return dbav.get_information_attackVectors(clickData)
+    return html.P(dbav.get_information_attackVectors(clickData))
     
 ############# Phishing-Tab #############
 

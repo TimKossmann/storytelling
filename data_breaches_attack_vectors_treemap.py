@@ -1,3 +1,4 @@
+import re
 import plotly.express as px
 import plotly.graph_objects as go
 import dash
@@ -15,6 +16,7 @@ class Chart_AttackVectors():
     def __init__(self):
         self.df = pd.read_excel("./datasets/DataBreaches_initialAttackVectors(2).xlsx") # Excel einlesen
         self.fig = None
+        self.clickdata = {}
         self.edit_df()
         self.create_treemap()
 
@@ -38,7 +40,7 @@ class Chart_AttackVectors():
         )
         self.fig.update_layout(clickmode='event+select')
         self.fig.update_layout(
-            uniformtext=dict(minsize=12, mode='show'),
+            #uniformtext=dict(minsize=12, mode='show'),
             margin = dict(t=50, l=25, r=25, b=25), 
             plot_bgcolor= 'rgba(0, 0, 0, 0)',
             paper_bgcolor= 'rgba(0, 0, 0, 0)',
@@ -50,6 +52,13 @@ class Chart_AttackVectors():
         
     # Information zu Angriffspunkt auslesen
     def get_information_attackVectors(self, clickData):
+        self.clickdata = clickData['points'][0]
+        if clickData['points'][0]['label'] == "Angriffsziele":
+            return "Hacker haben verschiedene Angriffsziele. Zunächst denkt man dabei an Hackerangriffe auf Systeme, bei dem der Angreifer die Schwächen des System ausnuzt. Allerdings können auch Menschen in das Ziel von Hackern geraten. Dabei ist das Ziel oft Menschen zu manipulieren oder sie bestimmte Handlungen ausführen zu lassen, dass der Angreifer Zugang zum System bekommt."
+        if clickData['points'][0]['label'] == "Mensch":
+            return "Menschliches Fehlverhalten sind eine häufige Ursache für Datenlecks. Meist rührt das Fehlverhalten von Unwissenheit oder Unachtsamkeit. Gegen Unachtsamkeit und mutwilliges Böswilliges Verhalten kann leider schwer etwas unternommen werden. Aber gegen Unwissenheit helfen Schulungen und Sensibilisierungskurse, die maßgeblich zum Schutz des Unternehmens beiträgt."
+        if clickData['points'][0]['label'] == "System":
+            return "Systemschwächen sind häufig Ziele von Hackern. Dabei können alle möglichen Systeme angegriffen werden, die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden können externe Sicherheitsfirmen beauftragt werden, die einen Angriff simuliert."
         return self.df.loc[self.df['Angriffspunkt'] == clickData['points'][0]['label']]['Information']
 
     # Treemap-Mensch erstellen

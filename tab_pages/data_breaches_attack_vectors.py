@@ -21,29 +21,32 @@ class AttackVectorsPage():
                     html.Div(
                         id="left-side",
                         children=[
-                            html.H3(id="attackVector-header", children="attack vectors"),
-                            html.Div(className="figure", id='attackVectors'),
-                            
-    
-                            html.Div([
-                                dcc.Markdown("""
-                                    **Click Data**
-
-                                    Click on points in the graph.
-                                """),
-                                html.Pre(id='click-data'),
-                            ]),
+                            html.H3("Hackerarten und Angriffsziele"),
+                            html.Pre(id='click-data'),
                             dcc.Graph(
-                                id='basic-interactions', 
+                                id='attack-treemap', 
                                 figure = self.atp.fig
                                 ),
                         ]),
                     html.Div(
                         id="right-side",
                         children=[
-                            html.H6("Informationen über Angriffspunkte für Cyber Attacken"),
-                            html.H5(id='name-attack'),
-                            html.Div(id='info-attack'),
+                            html.H3("Informationen"),
+                            html.Div(
+                                id="information-wrapper", 
+                                children=[
+                                    html.H4(id='name-attack',
+                                        children=[
+                                            "Hinweis"
+                                        ]
+                                    ),
+                                    html.Div(id='info-attack',
+                                        children=[
+                                            html.P("Klicken Sie links auf die Bereiche zu denen Sie genauere Informationen haben möchten.")
+                                        ]
+                                    ),
+                                ]
+                            ),
                         ]
                     )         
                 ]
