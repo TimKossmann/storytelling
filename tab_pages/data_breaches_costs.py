@@ -23,14 +23,7 @@ class DataBreachesPage():
                         children=[
                             html.H3(id="dataBreaches-header", children="data breaches"),
                             dcc.Graph(className="graph", id='graph-with-slider'),
-                            dcc.Slider(
-                            id='year-slider',
-                            min=self.dbr.df['year'].max() - 7 ,
-                            max=self.dbr.df['year'].max(),
-                            value=self.dbr.df['year'].max(),
-                            marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
-                            step=None
-                            ),
+                            
     
                             
                         ]),
@@ -40,7 +33,15 @@ class DataBreachesPage():
                             dcc.Graph(className="graph", id='year-line-chart'),
                             
                         ]
-                    )         
+                    ),
+                    dcc.Slider(
+                            id='year-slider',
+                            min=self.dbr.df['year'].max() - 7 ,
+                            max=self.dbr.df['year'].max(),
+                            value=self.dbr.df['year'].max(),
+                            marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
+                            step=None
+                            ),         
                 ]
             )
         
