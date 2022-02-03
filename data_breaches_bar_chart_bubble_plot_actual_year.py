@@ -129,7 +129,7 @@ class Charts_DataBreaches():
             ),
         )
 
-        self.fig.add_trace(self.fig2.data[0])
+        self.fig_lineplot = self.fig.add_trace(self.fig2.data[0])
 
 
     # Balken-Diagramm erstellen
@@ -209,6 +209,7 @@ class Charts_DataBreaches():
             transition_duration=500)
         return self.fig_bubblechart
 
+   
 
 
 
