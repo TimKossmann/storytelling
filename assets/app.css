@@ -45,12 +45,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #dataBreaches-wrapper{
+    text-align: center;
     width: 100%;
 }
 
 #dataBreach {
     width: 50%;
     float: left;
+}
+
+#databreach-chart-wrapper{
+    display: inline-block;
+    width: 100%;
+}
+
+#slider-wrapper{
+    width: 100%;
+
+}
+
+#year-slider{
+    width: 95%;
 }
 
 #year-overview{
@@ -115,6 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 #graph-with-slider {
+
 }
 
 

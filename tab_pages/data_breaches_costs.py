@@ -19,29 +19,41 @@ class DataBreachesPage():
         return html.Div(
                 id="dataBreaches-wrapper",
                 children=[
-                    html.Div(id="year-overview",
+                    html.Div(
+                        id="databreach-chart-wrapper",
                         children=[
-                            html.H3(id="dataBreaches-header", children="data breaches"),
-                            dcc.Graph(className="graph", id='graph-with-slider'),
-                            
-    
-                            
-                        ]),
-                    html.Div(id="dataBreach",
-                        children=[
-                            html.H6("Informationen über ???"),
-                            dcc.Graph(className="graph", id='year-line-chart'),
-                            
+                        html.H3("Schaden der durch Hackerattacken entsteht"),
+                        html.P("Hier finden Sie eine Übersicht, wieviel Schaden durch Hacks weltweit entstehen."),
+                        html.Div(id="dataBreach",
+                            children=[
+                                #html.H6("Informationen über ???"),
+                                dcc.Graph(className="graph", id='year-line-chart'),
+                                
+                            ]
+                        ),
+                        html.Div(id="year-overview",
+                            children=[
+                                #html.H3(id="dataBreaches-header", children="data breaches"),
+                                dcc.Graph(className="graph", id='graph-with-slider'),
+                                
+        
+                                
+                            ]),
                         ]
                     ),
-                    dcc.Slider(
-                            id='year-slider',
-                            min=self.dbr.df['year'].max() - 7 ,
-                            max=self.dbr.df['year'].max(),
-                            value=self.dbr.df['year'].max(),
-                            marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
-                            step=None
-                            ),         
+                    html.Div(
+                        id="slider-wrapper",
+                        children=[
+                        dcc.Slider(
+                                id='year-slider',
+                                min=self.dbr.df['year'].max() - 7 ,
+                                max=self.dbr.df['year'].max(),
+                                value=self.dbr.df['year'].max(),
+                                marks={str(year): str(year) for year in self.dbr.df['year'].unique()},
+                                step=None
+                                ),
+                        ]
+                    )         
                 ]
             )
         

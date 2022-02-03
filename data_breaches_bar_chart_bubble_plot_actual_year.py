@@ -1,4 +1,5 @@
 import re
+from tokenize import String
 import plotly.express as px
 import dash
 import pandas as pd 
@@ -52,7 +53,7 @@ class Charts_DataBreaches():
         # print(df_fig1.head())
         fig = px.line(df_fig1, x="year", y="records lost", 
                                 labels={
-                                "year": "Jahre",
+                                "year": "",
                                 "records lost": "entstandener Schaden (in Mrd. US$)",
 
                                 },
@@ -64,7 +65,7 @@ class Charts_DataBreaches():
         fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color=color)
         fig.update_layout(
             title={
-                'text': "Plot Title",
+                'text': "Verlauf des enstandenen Schadens durch Datenlecks",
                 'y':0.87,
                 'x':0.0,
                 'xref': "paper",
@@ -170,13 +171,13 @@ class Charts_DataBreaches():
 	        size="records lost", color="organisation",
             hover_name="organisation", size_max=60, text = "organisation_name", 
             labels={
-                        "date": "Monat Jahr",
+                        "date": "",
                         "records lost": "entstandener Schaden (in Mio. US$)",
                         },
                         title='Testtitle')
         self.fig_bubblechart.update_layout(
                 title={
-        'text': "Plot Title",
+        'text': "Die größten Datenlecks " + str(year),
         'y':0.87,
         'x':0.0,
         'xref': "paper",
