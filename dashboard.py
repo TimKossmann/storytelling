@@ -139,6 +139,27 @@ def display_attackVectors(clickData):
 def display_attackVectors(clickData):
     return dbav.get_information_attackVectors(clickData)
     
+############# Phishing-Tab #############
+
+@app.callback(
+    Output('failbar-chart', 'figure'),
+    Input('phishing-dropdown', 'value'),
+    Input('mark-dropdown', 'value'))
+def display_attackVectors(phishing_sort, mark):
+    print("MARK'"+mark+"'")
+    return phishing.pg.get_fail_bar(phishing_sort, mark)
+
+
+@app.callback(
+    Output('mark-dropdown-wrapper', 'children'),
+    Input('phishing-dropdown', 'value'))
+def display_attackVectors(clickData):
+    return dcc.Dropdown(
+                id='mark-dropdown',
+                options=phishing.pg.get_dropdown_list(clickData),
+                value=''
+            )
+
 
 
 ############# Password-Tab #############

@@ -26,11 +26,17 @@ class Chart_AttackVectors():
     # Treemap erstellen
     def create_treemap(self):
         self.edit_df()
-        self.fig = px.treemap(self.df,  path=[px.Constant("all"), 'Fehler','Angriffspunkt'], values='Häufigkeit von Data Breaches',labels= 'Angriffspunkt',color_continuous_scale = None, maxdepth = 2, color='Häufigkeit von Data Breaches', 
+        self.fig = px.treemap(self.df,  path=[px.Constant("all"), 'Fehler','Angriffspunkt'], values='Häufigkeit von Data Breaches',labels= 'Angriffspunkt',color_continuous_scale=[[0, 'rgb(7, 37, 66)'], [1.0, 'rgb(77, 219, 227)']], maxdepth = 2, color='Häufigkeit von Data Breaches', 
         hover_data=['Angriffspunkt'])
         self.fig.update_layout(clickmode='event+select')
-        self.fig.update_layout(margin = dict(t=50, l=25, r=25, b=25))
-        self.fig.update_traces(root_color="lightgrey", marker_coloraxis=None)
+        self.fig.update_layout(
+            margin = dict(t=50, l=25, r=25, b=25), 
+            plot_bgcolor= 'rgba(0, 0, 0, 0)',
+            paper_bgcolor= 'rgba(0, 0, 0, 0)',
+            showlegend = False,
+            )
+        self.fig.update_coloraxes(showscale=False)
+        #self.fig.update_traces(root_color="lightgrey", marker_coloraxis=None)
 
         
     # Information zu Angriffspunkt auslesen

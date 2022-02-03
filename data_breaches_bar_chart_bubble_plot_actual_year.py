@@ -25,6 +25,7 @@ class Charts_DataBreaches():
         self.df = self.df.drop(self.df.index[[0]]) # Löschen der ersten Zeile
         self.df["year"] = self.df["year"].astype("int") # Umwandlung des Datentyps von Year von Object in Integer mit der typecasting_from_column-Methode
         self.df["records lost"] = pd.to_numeric(self.df["records lost"]) # Umwandlung des Datentyps von records lost von Object in numeric
+        self.df["records lost"] = (self.df["records lost"]/1000000).round()
         self.df["organisation"] = self.df["organisation"].astype("string") # Umwandlung des Datentyps von Organisation von Object in string
         self.df['organisation_name'] = ''
         for year in range( 2004, 2022):
@@ -42,21 +43,21 @@ class Charts_DataBreaches():
 
     # Linien-Diagramm erstellen 
     def create_lineplot(self, year):   
-        df_fig1 = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum().reset_index())
+        df_fig1 = (pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum()/1000).reset_index())
         df_fig1 = df_fig1.loc[df_fig1["year"]>= 2014]
         # print(df_fig1.head())
         fig = px.line(df_fig1, x="year", y="records lost", 
                                 labels={
                                 "year": "Jahre",
-                                "records lost": "",
+                                "records lost": "entstandener Schaden (in Mrd. US$)",
 
                                 },
                                 
 
                                 title='Testtitle', markers=True)
 
-        fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="black", col =10)
-        fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="black")
+        fig.update_xaxes(showgrid=False, title_font_family="Arial", title_font_color="white")
+        fig.update_yaxes(showgrid=False, title_font_family="Arial", title_font_color="white")
         fig.update_layout(
             title={
                 'text': "Plot Title",
@@ -66,19 +67,21 @@ class Charts_DataBreaches():
                 'xanchor': 'left',
                 'yanchor': 'top'},
             plot_bgcolor = "rgba(0,0,0,0)",
-            paper_bgcolor = "rgba(255,255,255,1)",
+            paper_bgcolor = "rgba(0,0,0,0)",
+            font_color="white",
+
         
             xaxis= dict(
                 range=[self.df['year'].max() - 7 - 0.5, self.df['year'].max() + 0.5],
                 dtick= 1,
                 ticks = "outside",
                 tickwidth = 1,
-                tickcolor = "black",
+                tickcolor = "white",
                 ticklen = 8,
                 tickfont = dict(family = 'Arial', size = 14),
-                showline = True,
+                showline = False,
                 linewidth = 1,
-                linecolor = 'black',
+                linecolor = 'white',
                 
                 
 
@@ -88,35 +91,36 @@ class Charts_DataBreaches():
                 range=[0, df_fig1['records lost'].max()*1.2],
                 ticks = "outside",
                 tickwidth = 1,
-                tickcolor = "black",
+                tickcolor = "white",
                 ticklen = 8,
                 ticklabelposition="outside",
                 showline = True,
                 linewidth = 1,
-                linecolor = 'black',
+                linecolor = 'white',
                 
                 ),
             )
 
         fig.update_traces(
             marker = dict(
-                color = 'LightSkyBlue',
+                color = '#4DDBE3',
                 size = 10,
                 opacity = 0.8,
             ),
             line = dict(
-                color = 'LightSkyBlue',
+                color = '#4DDBE3',
                 width = 2
             ),
         )
-
+        #Add Annotation under Title
+        """
         fig.add_annotation(x=0,y=1.1,
 
-                        text="entstandener Schaden (in US$)", #textangle=-90,
+                        text="entstandener Schaden (in Mrd. US$)", #textangle=-90,
                             xref="paper",
                             valign="top",
             yref="y domain", showarrow=False)
-
+        """
 
 
         fig2 = px.scatter(df_fig1.loc[df_fig1["year"] == year], x="year", y="records lost")
@@ -124,9 +128,8 @@ class Charts_DataBreaches():
 
         fig2.update_traces(
             marker = dict(
-                color = 'pink',
+                color = 'rgb(159, 90, 253)',
                 size = 15,
-                opacity = 0.5,
                 
 
             ),
@@ -159,7 +162,7 @@ class Charts_DataBreaches():
             hover_name="organisation", size_max=60, text = "organisation_name", 
             labels={
                         "date": "Monat Jahr",
-                        "records lost": "entstandener Schaden (in US$)",
+                        "records lost": "entstandener Schaden (in Mio. US$)",
                         },
                         title='Testtitle')
         self.fig_bubblechart.update_layout(
@@ -171,7 +174,9 @@ class Charts_DataBreaches():
         'xanchor': 'left',
         'yanchor': 'top'},
         plot_bgcolor = "rgba(0,0,0,0)",
-        paper_bgcolor = "rgba(255,255,255,1)",
+        paper_bgcolor = "rgba(0,0,0,0)",
+        font_color="white",
+        showlegend = False,
         #uniformtext_minsize = 12 ,
         #uniformtext_mode = 'hide',
         
@@ -181,12 +186,12 @@ class Charts_DataBreaches():
                     # dtick= 500000,
                     ticks = "outside",
                     tickwidth = 1,
-                    tickcolor = "black",
+                    tickcolor = "white",
                     ticklen = 8,
                     tickfont = dict(family = 'Arial', size = 14),
                     showline = True,
                     linewidth = 1,
-                    linecolor = 'black',
+                    linecolor = 'white',
                     showgrid = False,
                     
                     
@@ -201,13 +206,13 @@ class Charts_DataBreaches():
                     #dtick= 1000000,
                     ticks = "outside",
                     tickwidth = 1,
-                    tickcolor = "black",
+                    tickcolor = "white",
                     ticklen = 8,
                     tickfont = dict(family = 'Arial', size = 14),
                     showline = True,
                     linewidth = 1,
-                    linecolor = 'black',
-                    #zeroline = True,
+                    linecolor = 'white',
+                    zeroline = False,
                     showgrid = False,
                     ),
             uniformtext_minsize=8, uniformtext_mode='hide',   

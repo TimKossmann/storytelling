@@ -1,3 +1,4 @@
+import random
 import dash.dependencies as dd
 from dash import html, dcc
 from io import BytesIO
@@ -37,9 +38,9 @@ class Chart_WordCloud():
 
 
 
-        self.word_cloud = WordCloud(collocations = False, background_color="white",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
+        self.word_cloud = WordCloud(collocations = False, background_color="rgb(7, 37, 66)",width=1920, height=1080, mask=mask).generate_from_frequencies(text)
         def black_color_func(word, font_size, position,orientation,random_state=None, **kwargs):
-            return("hsl(0,100%, 1%)")
+            return "hsl(0, 100%, 100%)"
         self.word_cloud.recolor(color_func = black_color_func)
 
         # Creating word_cloud with text as argument in .generate() method
