@@ -51,4 +51,21 @@ class Chart_AttackVectors():
     # Information zu Angriffspunkt auslesen
     def get_information_attackVectors(self, clickData):
         return self.df.loc[self.df['Angriffspunkt'] == clickData['points'][0]['label']]['Information']
+
+    # Treemap-Mensch erstellen
+    def create_treemap_mensch(self):
+        self.edit_df()
+        df = self.df[self.df['Fehler']=='Mensch']
+        fig_mensch = px.treemap(self.df,  path=[px.Constant("Mensch"), 'Angriffspunkt'], values='Häufigkeit von Data Breaches',labels= 'Angriffspunkt',color_continuous_scale=[[0, 'rgb(7, 37, 66)'], [1.0, 'rgb(77, 219, 227)']], maxdepth = 2, color='Häufigkeit von Data Breaches', 
+        hover_data=['Angriffspunkt'])
+        fig_mensch.update_layout(clickmode='event+select')
+        fig_mensch.update_layout(
+            margin = dict(t=50, l=25, r=25, b=25), 
+            plot_bgcolor= 'rgba(0, 0, 0, 0)',
+            paper_bgcolor= 'rgba(0, 0, 0, 0)',
+            showlegend = False,
+            )
+        fig_mensch.update_coloraxes(showscale=False)
+        return fig_mensch
+        #self.fig.update_traces(root_color="lightgrey", marker_coloraxis=None)
     

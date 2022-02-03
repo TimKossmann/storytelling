@@ -84,7 +84,7 @@ class Charts_DataBreaches():
                 tickcolor = color,
                 ticklen = 8,
                 tickfont = dict(family = 'Arial', size = 14),
-                showline = False,
+                showline = not darkmode,
                 linewidth = 1,
                 linecolor = color,
                 

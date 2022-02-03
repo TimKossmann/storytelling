@@ -9,14 +9,24 @@ import plotly.io as pio
 import plotly
 from docx.shared import Pt
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches
+from data_breaches_attack_vectors_treemap import Chart_AttackVectors
+from phishing_graphs import Phishing_Graphs
 
 date = datetime.date.today()
 actual_year = date.strftime("%Y")
 
 #Laden der Diagramme
+#Data Breaches
 dbr = Charts_DataBreaches()
-dbr.fig_bubblechart.write_image("fig_bubblechart.png")
-dbr.create_lineplot(int(actual_year) -1).write_image("fig_lineplot.png")
+dbr.update_bubblechart_by_year(int(actual_year) -1, False).write_image("fig_bubblechart.png")
+dbr.create_lineplot(int(actual_year) -1, False).write_image("fig_lineplot.png")
+#Cyber Attacken
+atp = Chart_AttackVectors()
+atp.fig.write_image("treemap.png")
+atp.create_treemap_mensch().write_image("treemap_mensch.png")
+#Phishing
+pg = Phishing_Graphs()
+pg.get_link_donut().write_image("phising_link.png")
 
 #Dokument laden
 document = Document('LaCTiS_Report - Template.docx')
@@ -69,17 +79,46 @@ einleitung.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 document.add_page_break()
 
 # Thema Data Breaches
-document.add_picture('fig_lineplot.png', width=Inches(5.0))
+heading2 = document.add_heading('Schaden durch Hacks', level = 1)
+document.add_picture('fig_lineplot.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_1 = document.add_paragraph('Abbildung 1: Data Breaches über x Jahre')
+abbildung_1 = document.add_paragraph('Abbildung 1: Data Breaches über die letzten 8 Jahre')
 abbildung_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-document.add_picture('fig_bubblechart.png', width=Inches(5.0))
+document.add_picture('fig_bubblechart.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches')
+abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches im Jahr 2021')
 abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+#Seitenumbruch
+document.add_page_break()
+
+#Thema Cyber Attacken
+heading2 = document.add_heading('Cyber Attacken', level = 1)
+document.add_picture('treemap.png', width=Inches(6.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_3 = document.add_paragraph('Abbildung 3: Cyber Attacken nach Angriffsvektor Mensch und System aufgeteilt')
+abbildung_3.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+document.add_picture('treemap_mensch.png', width=Inches(6.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_4 = document.add_paragraph('Abbildung 4: Cyber Attacken mit Angriffsvektor Mensch')
+abbildung_4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+#Seitenumbruch
+document.add_page_break()
+
+#Thema Phising
+heading3 = document.add_heading('Phising', level = 1)
+document.add_picture('phising_link.png', width=Inches(6.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_5 = document.add_paragraph('Abbildung 5: Cyber Attacken nach Angriffsvektor Mensch und System aufgeteilt')
+abbildung_5.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
 
