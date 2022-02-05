@@ -117,6 +117,16 @@ def update_figure(selected_year):
 def update_figure2(selected_year):
     return dbp.create_lineplot(selected_year)
 
+@app.callback(
+    Output("download-data-breches-excel", "data"),
+    Input("data_breaches_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    return dcc.send_data_frame(dbp.get_excel_data(), "datenlecks.xlsx", sheet_name="Tabellenblatt1")
+
+
+
 ############# Hackermethoden/AttackVectors-Tab #############
 @app.callback(
     Output('attack-treemap', 'figure'),
@@ -149,6 +159,11 @@ def display_attackVectors(phishing_sort, mark):
     print("MARK'"+mark+"'")
     return phishing.pg.get_fail_bar(phishing_sort, mark)
 
+@app.callback(
+    Output('mark-header', 'children'),
+    Input('phishing-dropdown', 'value'))
+def display_attackVectors(clickData):
+    return f"Hebe deine {clickData} hervor"
 
 @app.callback(
     Output('mark-dropdown-wrapper', 'children'),

@@ -125,6 +125,26 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0px;  
 }
+
+.donut-wrapper{
+    text-align: center;
+    align-content: center;
+}
+
+.donut-wrapper p{
+    margin: auto;
+    width: 70%;
+}
+
+.dounut {
+    margin: auto;
+    width: 80%;
+}
+
+.dropdown {
+    color: #000;
+}
+
 #failbar-wrapper{
     width: 70%;
     float: left;
@@ -136,11 +156,6 @@ h1, h2, h3, h4, h5, h6 {
     height: 700px;
 }
 
-
-
-#graph-with-slider {
-
-}
 
 
 .app-header .app-header--title {

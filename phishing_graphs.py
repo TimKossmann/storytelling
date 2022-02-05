@@ -48,7 +48,27 @@ class Phishing_Graphs():
                 color_map[row["Name"]] = 'rgb(159, 90, 253)'
             else:
                 color_map[row["Name"]] = 'rgb(32, 59, 85)'
-        fig = px.bar(df, x="Fehlerquote (%)", y="Name", color='Name', text=[f'{i} %' for i in df['Fehlerquote (%)']], color_discrete_map = color_map)
+        fig = px.bar(
+            df, 
+            x="Fehlerquote (%)", 
+            y="Name", 
+            color='Name', 
+            text=[f'{i} %' for i in df['Fehlerquote (%)']], 
+            color_discrete_map = color_map,
+            
+        )
+        fig.update_layout(
+            title={
+                'text': "Fehlerquote im Umgang mit Phishing Mails nach " + type_name,
+                'y':0.97,
+                'x':0.0,
+                'xref': "paper",
+                'xanchor': 'left',
+                'yanchor': 'top'},
+            plot_bgcolor = "rgba(0,0,0,0)",
+            paper_bgcolor = "rgba(0,0,0,0)",
+            font_color="white"
+        )
         fig.update_xaxes(
             showgrid=False,
             ticks = "outside",
@@ -83,21 +103,21 @@ class Phishing_Graphs():
         img = Image.open('./assets/E269.png')
         fig = px.pie({"link/no_link": ["Link", "No"], "value": [self.link, 100-self.link]}, names="link/no_link", values="value", hole=0.7, color="link/no_link", 
         color_discrete_map={"Link": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, img, "Link aufrufen")
+        return self.update_donut_fig(fig, img, "Link aufrufen", "63% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen")
     
     def get_input_donut(self):
         img = Image.open('./assets/2328_color.png')
         fig = px.pie({"input/no_input": ["Input", "No"], "value": [self.input, 100-self.input]}, names="input/no_input", values="value", hole=0.7, color="input/no_input", 
         color_discrete_map={"Input": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, img, "Daten eingeben")
+        return self.update_donut_fig(fig, img, "Daten eingeben", "Bei 23% der Phishing Mails sollen der Nutzer <br> sensible Daten angeben")
     
     def get_attach_donut(self):
         img = Image.open('./assets/1F4CE.png')
         fig = px.pie({"attach/no_attach": ["Attach", "No"], "value": [self.attach, 100-self.attach]}, names="attach/no_attach", values="value", hole=0.7, color="attach/no_attach", 
         color_discrete_map={"Attach": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, img, "Anhang öffnen")
+        return self.update_donut_fig(fig, img, "Anhang öffnen", "9% aller Phishing Mails zielen darauf ab, den <br> Nutzer den Anhang öffnen zu lassen")
 
-    def update_donut_fig(self, fig, img, txt):
+    def update_donut_fig(self, fig, img, txt, expl_txt=""):
         fig.add_layout_image(
             dict(
                 source=img,
@@ -113,7 +133,16 @@ class Phishing_Graphs():
             yref="paper",
             x=0.5, y=0.45,
             showarrow=False,
-            font_size=24,
+            font_size=18,
+            font_color='white'
+        )
+        fig.add_annotation(
+            text=expl_txt, 
+            xref="paper", 
+            yref="paper",
+            x=0.5, y=0.0,
+            showarrow=False,
+            font_size=16,
             font_color='white'
         )
         fig.update_traces(textinfo='none', sort=False)

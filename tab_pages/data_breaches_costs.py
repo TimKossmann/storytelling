@@ -13,6 +13,9 @@ class DataBreachesPage():
 
     def create_lineplot(self, year):
         return self.dbr.create_lineplot(year)
+
+    def get_excel_data(self):
+        return self.dbr.df.to_excel
     
     def get_layout(self):
         
@@ -53,7 +56,15 @@ class DataBreachesPage():
                                 step=None
                                 ),
                         ]
-                    )         
+                    ),
+                    html.Div(
+                        className="download-wrapper",
+                        children=
+                        [
+                            html.Button("CSV herunterladen", className="btn_csv", id="data_breaches_btn"),
+                            dcc.Download(id="download-data-breches-excel"),
+                        ]
+                    )
                 ]
             )
         

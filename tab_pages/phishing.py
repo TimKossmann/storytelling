@@ -12,15 +12,25 @@ class PhishingPage():
             id="phishing-wrapper", 
             children=[
                 
-                html.H3("Was der Email-Emfänge mit Phishing Mails tun soll"),
+                html.H3("Was der Email-Emfänger mit Phishing Mails tun soll"),
                 html.Div(
                     id="what-phishing-wants",
                     children=[
-                        dcc.Graph(figure=self.pg.get_link_donut()),
-                        dcc.Graph(figure=self.pg.get_input_donut()),
-                        dcc.Graph(figure=self.pg.get_attach_donut()),
+                        html.Div(className="donut-wrapper", children=[
+                            dcc.Graph(className="dounut", figure=self.pg.get_link_donut()),
+                        ]),
+                        html.Div(className="donut-wrapper", children=[
+                            dcc.Graph(className="dounut",figure=self.pg.get_input_donut()),
+                        ]),
+                        html.Div(className="donut-wrapper", children=[
+                            dcc.Graph(className="dounut",figure=self.pg.get_attach_donut()),
+                        ]),
+                        
                     ]
                 ),
+                html.H3("Wer besonders anfällig ist für Phishing Attacken"),
+                html.Br(),
+                html.Br(),
                 html.Div(
                     id="fail-bar-chart-wrapper",
                     children=[
@@ -33,17 +43,18 @@ class PhishingPage():
                         html.Div(
                             id="failinfo-wrapper",
                             children=[
-                                html.H6("Wähle ob du nach deiner Abteilung oder deiner Branche filtern möchtest:"),
+                                html.H4("Wähle ob du nach deiner Abteilung oder deiner Branche filtern möchtest:"),
                                 dcc.Dropdown(
                                     id='phishing-dropdown',
+                                    className="dropdown", 
                                     options=[
                                         {'label': 'Abteilung', 'value': 'Abteilung'},
                                         {'label': 'Branche', 'value': 'Branche'},
                                     ],
                                     value=self.type
                                 ),
-                                html.H6(f"Hebe deine {self.type} hervor"),
-                                html.Div(id="mark-dropdown-wrapper"),
+                                html.H4(id="mark-header"),#f"Hebe deine {self.type} hervor"),
+                                html.Div(className="dropdown", id="mark-dropdown-wrapper"),
                                 
                             ]
                         ),

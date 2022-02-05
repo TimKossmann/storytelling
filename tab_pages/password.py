@@ -65,7 +65,15 @@ class PasswordPage():
         self.hours = (self.seconds - (self.years * seconds_in_year) - (self.months * seconds_in_month) - (self.weeks * seconds_in_week) - (self.days * seconds_in_day)) // seconds_in_hour
         self.minutes = (self.seconds - (self.years * seconds_in_year) - (self.months * seconds_in_month) - (self.weeks * seconds_in_week) - (self.days * seconds_in_day) - (self.hours * seconds_in_hour)) // seconds_in_minute
         self.seconds = self.seconds - (self.years * seconds_in_year) - (self.months * seconds_in_month) - (self.weeks * seconds_in_week) - (self.days * seconds_in_day) - (self.hours * seconds_in_hour) - (self.minutes * seconds_in_minute)
-    
+        if self.years > 1000000000000:
+            self.years = "∞"
+            self.months = 0 
+            self.weeks = 0 
+            self.days = 0 
+            self.hours = 0 
+            self.minutes = 0
+            self.seconds = 0
+
     def get_pw_analyse(self, pw):
         self.calculate_pw_strength(pw)
         d_text = "Nein"
@@ -125,14 +133,17 @@ class PasswordPage():
                     html.Div(
                         id="left-side",
                         children=[
-                            html.H3(id="wordcloud-header", children="Most common Passwords"),
+                            html.H3(id="wordcloud-header", children="Die meist verwendeten Passwörter"),
+                            html.Br(),
                             html.Img(className="img", id='wordcloud'),
                         ]
                     ),
                     html.Div(
                         id="right-side",
                         children=[
-                            html.H6("Gib dein Passwort ein und berechne wie lange ein moderner Computer braucht es zu knacken"),
+                            html.H3("Gib dein Passwort hier ein um zu sehen, wie lange ein Computer braucht es zu knacken"),
+                            html.Br(),
+                            html.H4("Dein Passwort:"),
                             html.Div([
                                 dcc.Input(id='my-input', value='', type='text')
                             ]),
