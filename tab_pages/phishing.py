@@ -1,11 +1,20 @@
 from dash import dcc, html, Input, Output
 from phishing_graphs import Phishing_Graphs
+import pandas as pd
 
 
 class PhishingPage():
     def __init__(self):
         self.pg = Phishing_Graphs()
         self.type = "Abteilung"
+
+    def get_excel(self):
+        writer = pd.ExcelWriter('Phishing.xlsx', engine="xlsxwriter")
+        copytoexcel = pd.DataFrame(self.pg.get_fail_df())
+        copytoexcel.to_excel(writer, sheet_name="Fehlerquoten")
+        copytoexcel = pd.DataFrame(self.pg.get_lia_df())
+        copytoexcel.to_excel(writer, sheet_name="Phishing Absichten")
+        writer.save()
 
     def get_layout(self):
         return html.Div(
@@ -28,8 +37,8 @@ class PhishingPage():
                         
                     ]
                 ),
-                html.H3("Wer besonders anfällig ist für Phishing Attacken"),
                 html.Br(),
+                html.H3("Wer besonders anfällig ist für Phishing Attacken"),
                 html.Br(),
                 html.Div(
                     id="fail-bar-chart-wrapper",
@@ -58,6 +67,14 @@ class PhishingPage():
                                 
                             ]
                         ),
+                        html.Div(
+                        className="download-wrapper",
+                        children=
+                        [
+                            html.Button("Excel herunterladen", className="btn_csv", id="phishing_btn"),
+                            dcc.Download(id="download-phishing-excel"),
+                        ]
+                    )
                     ]
                 )
 

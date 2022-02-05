@@ -11,6 +11,9 @@ class AttackVectorsPage():
    
     def get_information_attackVectors(self, clickData):
         return self.atp.get_information_attackVectors(clickData)
+    
+    def get_excel_df(self):
+        return self.atp.get_df_for_excel().to_excel
 
     def get_layout(self):
         
@@ -47,6 +50,14 @@ class AttackVectorsPage():
                                     ),
                                 ]
                             ),
+                        ]
+                    ),
+                    html.Div(
+                        className="download-wrapper",
+                        children=
+                        [
+                            html.Button("CSV herunterladen", className="btn_csv", id="attack_vectors_btn"),
+                            dcc.Download(id="download-attack_vectors-excel"),
                         ]
                     )         
                 ]

@@ -26,6 +26,16 @@ class Chart_AttackVectors():
         self.df["durchschnittliche Gesamtkosten"] = pd.to_numeric(self.df["durchschnittliche Gesamtkosten"]) # Umwandlung des Datentyps von average total costs von Object in numeric
         print(self.df.columns)
 
+    def get_df_for_excel(self):
+        res = self.df.copy()
+        res.drop('durchschnittliche Gesamtkosten', inplace=True, axis=1)
+
+        res = res.rename(
+            columns={
+                'Fehler': 'Fehlerquelle', 
+                'Häufigkeit von Data Breaches': 'Grund für Datenlecks (%)', })
+        return res
+
     # Treemap erstellen
     def create_treemap(self):
         self.fig = px.treemap(

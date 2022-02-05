@@ -123,7 +123,9 @@ def update_figure2(selected_year):
     prevent_initial_call=True,
 )
 def download(n_clicks):
-    return dcc.send_data_frame(dbp.get_excel_data(), "datenlecks.xlsx", sheet_name="Tabellenblatt1")
+    dbp.get_excel_data()
+    return dcc.send_file('Datenlecks_Kosten.xlsx')
+    #return dcc.send_data_frame(dbp.get_excel_data(), "datenlecks.xlsx", sheet_name="Tabellenblatt1")
 
 
 
@@ -141,13 +143,22 @@ def display_attackVectors(clickData):
     print(clickData)
     return (clickData['points'][0]['label'])
     
-        
-
 @app.callback(
     Output('info-attack', 'children'),
     Input('attack-treemap', 'clickData'))
 def display_attackVectors(clickData):
     return html.P(dbav.get_information_attackVectors(clickData))
+
+@app.callback(
+    Output("download-attack_vectors-excel", "data"),
+    Input("attack_vectors_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    dbp.get_excel_data()
+    #return dcc.send_file('Datenlecks_Kosten.xlsx')
+    return dcc.send_data_frame(dbav.get_excel_df(), "Angriffspunkte.xlsx", sheet_name="Angriffspunkte")
+
     
 ############# Phishing-Tab #############
 
@@ -175,6 +186,16 @@ def display_attackVectors(clickData):
                 value=''
             )
 
+@app.callback(
+    Output("download-phishing-excel", "data"),
+    Input("phishing_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    phishing.get_excel()
+    return dcc.send_file('Phishing.xlsx')
+    #return dcc.send_data_frame(dbp.get_excel_data(), "datenlecks.xlsx", sheet_name="Tabellenblatt1")
+
 
 
 ############# Password-Tab #############
@@ -195,6 +216,14 @@ def update_output_div(input_value):
     return pp.get_pw_analyse(input_value)
 
 
+@app.callback(
+    Output("download-password-excel", "data"),
+    Input("password_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    #return dcc.send_file('Datenlecks_Kosten.xlsx')
+    return dcc.send_data_frame(pp.get_excel_df(), "Passwörter.xlsx", sheet_name="Passwörter")
 
 
 

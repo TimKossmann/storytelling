@@ -24,6 +24,17 @@ class PasswordPage():
             if c in special_charachters:
                 return True
         return False
+    
+    def get_excel_df(self):
+        res = self.wc.df.copy()
+        res.drop('size', inplace=True, axis=1)
+        res.drop('note', inplace=True, axis=1)
+        res = res.rename(
+            columns={
+                'Password': 'Passwort', 
+                'category': 'Kategorie', 
+                'rank': 'Platz', })
+        return res.to_excel
 
     def calculate_pw_strength(self, pw):
         if (pw == ""):
@@ -152,7 +163,15 @@ class PasswordPage():
                             ),
                             
                         ]
-                    )         
+                    ),
+                    html.Div(
+                        className="download-wrapper",
+                        children=
+                        [
+                            html.Button("Excel herunterladen", className="btn_csv", id="password_btn"),
+                            dcc.Download(id="download-password-excel"),
+                        ]
+                    )        
                 ]
             )
     

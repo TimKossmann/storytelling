@@ -1,5 +1,7 @@
+import imp
 from dash import dcc, html, Input, Output
 import dash
+import pandas as pd
 
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches
 
@@ -15,7 +17,13 @@ class DataBreachesPage():
         return self.dbr.create_lineplot(year)
 
     def get_excel_data(self):
-        return self.dbr.df.to_excel
+        writer = pd.ExcelWriter('Datenlecks_Kosten.xlsx', engine="xlsxwriter")
+        copytoexcel = pd.DataFrame(self.dbr.get_single_dbs_to_download())
+        copytoexcel.to_excel(writer, sheet_name="Einzel Datenlecks")
+        copytoexcel = pd.DataFrame(self.dbr.get_sum())
+        copytoexcel.to_excel(writer, sheet_name="Summierte Datenlecks")
+        writer.save()
+        return self.dbr.get_single_dbs_to_download().to_excel
     
     def get_layout(self):
         

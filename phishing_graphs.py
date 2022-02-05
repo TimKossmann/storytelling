@@ -16,6 +16,18 @@ class Phishing_Graphs():
         self.fail_df = pd.read_excel("./datasets/PhishingFail.xlsx")
         self.mark_bar = None
         self.type = "Abteilung"
+
+    def get_fail_df(self):
+        res = self.fail_df.copy()
+        res["Fehlerquote (%)"] = (res["Fehlerquote (%)"]*100).round()        
+        return res
+    
+    def get_lia_df(self):
+        data = {
+            "Phishing Absichten": ["Link aufrufen", "Daten eingeben", "Anhang öffnen"],
+            "Häufigkeit (%)": [68, 23, 9]
+        }
+        return pd.DataFrame(data)
     
     def get_dropdown_list(self, type):
         res = []
@@ -103,7 +115,7 @@ class Phishing_Graphs():
         img = Image.open('./assets/E269.png')
         fig = px.pie({"link/no_link": ["Link", "No"], "value": [self.link, 100-self.link]}, names="link/no_link", values="value", hole=0.7, color="link/no_link", 
         color_discrete_map={"Link": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, img, "Link aufrufen", "63% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen")
+        return self.update_donut_fig(fig, img, "Link aufrufen", "68% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen")
     
     def get_input_donut(self):
         img = Image.open('./assets/2328_color.png')

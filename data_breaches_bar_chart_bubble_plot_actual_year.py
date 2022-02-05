@@ -7,6 +7,8 @@ import numpy as np
 import random
 import datetime
 
+from sqlalchemy import false
+
 class Charts_DataBreaches():
 
     def __init__(self):
@@ -19,6 +21,40 @@ class Charts_DataBreaches():
         self.create_barplot()
         self.fig_bubblechart = None
         self.update_bubblechart_by_year(self.actual_year)
+    
+    def get_single_dbs_to_download(self):
+        res = self.df.copy()
+        res.drop('alternative name', inplace=True, axis=1)
+        res.drop('method', inplace=True, axis=1)
+        res.drop('sector', inplace=True, axis=1)
+        res.drop('interesting story', inplace=True, axis=1)
+        res.drop('data sensitivity', inplace=True, axis=1)
+        res.drop('displayed records', inplace=True, axis=1)
+        res.drop('Unnamed: 11', inplace=True, axis=1)
+        res.drop('organisation_name', inplace=True, axis=1)
+        res.drop('ID', inplace=True, axis=1)
+        res["date"] = res['date'].dt.strftime('%d.%m.%Y')
+        res = res.rename(
+            columns={
+                'organisation': 'Unternehmen', 
+                'records lost': 'Kosten', 
+                'year': 'Jahr', 
+                'story': 'Geschichte', 
+                'source name': 'Quellenname', 
+                '1st source link': 'Erster Qullen Link',
+                '2nd source link': 'Zweiter Qullen Link'})
+        return res
+    
+    def get_sum(self):
+        res = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum()/1000).reset_index()
+        res = res.rename(
+            columns={
+                'records lost': 'Summierte Kosten', 
+                'year': 'Jahr',
+            }
+        )
+
+        return res
 
     # Umwandlung der Datentypen 
     def edit_df(self):
@@ -26,7 +62,7 @@ class Charts_DataBreaches():
         self.df = self.df.drop(self.df.index[[0]]) # Löschen der ersten Zeile
         self.df["year"] = self.df["year"].astype("int") # Umwandlung des Datentyps von Year von Object in Integer mit der typecasting_from_column-Methode
         self.df["records lost"] = pd.to_numeric(self.df["records lost"]) # Umwandlung des Datentyps von records lost von Object in numeric
-        self.df["records lost"] = (self.df["records lost"]/1000000).round()
+        #self.df["records lost"] = (self.df["records lost"]/1000000).round()
         self.df["organisation"] = self.df["organisation"].astype("string") # Umwandlung des Datentyps von Organisation von Object in string
         self.df['organisation_name'] = ''
         for year in range( 2004, 2022):
@@ -166,8 +202,9 @@ class Charts_DataBreaches():
             color = "white"
         else:
             color = "black"
-
-        self.fig_bubblechart = px.scatter(self.df[(self.df['year'] == year)], x="date", y="records lost", 
+        df = self.df.copy()
+        df["records lost"] = (df["records lost"]/1000000).round()
+        self.fig_bubblechart = px.scatter(df[(self.df['year'] == year)], x="date", y="records lost", 
 	        size="records lost", color="organisation",
             hover_name="organisation", size_max=60, text = "organisation_name", 
             labels={
