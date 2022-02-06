@@ -53,8 +53,10 @@ class Phishing_Graphs():
     def get_fail_bar(self, type_name, mark, darkmode=True):
         if darkmode:
             color = "white"
+            avg_line_color = "rgba(255,255,255,0.7)"
         else:
             color = "black" 
+            avg_line_color = "rgb(32, 59, 85)"
         df = self.fail_df[self.fail_df["Art"] == type_name]
         df["Fehlerquote (%)"] = (df["Fehlerquote (%)"]*100).round()
         df.reset_index(drop=True, inplace=True)
@@ -119,24 +121,26 @@ class Phishing_Graphs():
               annotation_text=("Mittelwert der Fehlerquote (" +  str(mean) + "%)" ), 
               annotation_position="top",
               annotation_font_size=14,
-              annotation_font_color='rgb(32, 59, 85)'
+              annotation_font_color= color,
+            line_color=avg_line_color
+
              )
         return fig
 
     def get_link_donut(self, darkmode=True):
         fig = px.pie({"link/no_link": ["Link", "No"], "value": [self.link, 100-self.link]}, names="link/no_link", values="value", hole=0.7, color="link/no_link", 
         color_discrete_map={"Link": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "E269", "Link aufrufen", "68% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen", darkmode)
+        return self.update_donut_fig(fig, "E269", "Link aufrufen", darkmode, "68% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen")
     
     def get_input_donut(self, darkmode=True):
         fig = px.pie({"input/no_input": ["Input", "No"], "value": [self.input, 100-self.input]}, names="input/no_input", values="value", hole=0.7, color="input/no_input", 
         color_discrete_map={"Input": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "2328_color", "Daten eingeben", "Bei 23% der Phishing Mails sollen der Nutzer <br> sensible Daten angeben", darkmode)
+        return self.update_donut_fig(fig, "2328_color", "Daten eingeben", darkmode, "Bei 23% der Phishing Mails sollen der Nutzer <br> sensible Daten angeben")
     
     def get_attach_donut(self, darkmode=True):
         fig = px.pie({"attach/no_attach": ["Attach", "No"], "value": [self.attach, 100-self.attach]}, names="attach/no_attach", values="value", hole=0.7, color="attach/no_attach", 
         color_discrete_map={"Attach": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "1F4CE", "Anhang öffnen", "9% aller Phishing Mails zielen darauf ab, den <br> Nutzer den Anhang öffnen zu lassen", darkmode)
+        return self.update_donut_fig(fig, "1F4CE", "Anhang öffnen", darkmode, "9% aller Phishing Mails zielen darauf ab, den <br> Nutzer den Anhang öffnen zu lassen")
 
     def update_donut_fig(self, fig, img_name, txt, darkmode, expl_txt="" ):
         if darkmode:
@@ -145,7 +149,7 @@ class Phishing_Graphs():
         else:
             color = 'black'
             img = Image.open(f'./assets/{img_name}_black.png')
-            
+
         fig.add_layout_image(
             dict(
                 source=img,
