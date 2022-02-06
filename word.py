@@ -13,6 +13,8 @@ from data_breaches_attack_vectors_treemap import Chart_AttackVectors
 from phishing_graphs import Phishing_Graphs
 from passwords_wordcloud import Chart_WordCloud
 
+import numpy as np
+
 
 date = datetime.date.today()
 actual_year = date.strftime("%Y")
@@ -22,6 +24,9 @@ actual_year = date.strftime("%Y")
 dbr = Charts_DataBreaches()
 dbr.update_bubblechart_by_year(int(actual_year) -1, False).write_image("fig_bubblechart.png")
 dbr.create_lineplot(int(actual_year) -1, False).write_image("fig_lineplot.png")
+dbr.create_table().write_image('fig_table.png')
+
+
 #Cyber Attacken
 atp = Chart_AttackVectors()
 atp.fig.write_image("treemap.png")
@@ -101,6 +106,12 @@ last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches im Jahr 2021')
 abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
+document.add_picture('fig_table.png', width=Inches(3.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Data Breaches von Jahr 2014 bis 2021 inklusive der Mediane')
+table_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
 #Seitenumbruch
 document.add_page_break()
 
@@ -115,7 +126,7 @@ abbildung_3.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 document.add_picture('treemap_mensch.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_4 = document.add_paragraph('Abbildung 4: Cyber Attacken mit Angriffsvektor Mensch')
+abbildung_4 = document.add_paragraph('Abbildung 400: Cyber Attacken mit Angriffsvektor Mensch')
 abbildung_4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 #Seitenumbruch
