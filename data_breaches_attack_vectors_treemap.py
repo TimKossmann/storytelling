@@ -71,13 +71,15 @@ class Chart_AttackVectors():
             return "Systemschwächen sind häufig Ziele von Hackern. Dabei können alle möglichen Systeme angegriffen werden, die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden können externe Sicherheitsfirmen beauftragt werden, die einen Angriff simuliert."
         return self.df.loc[self.df['Angriffspunkt'] == clickData['points'][0]['label']]['Information']
 
-    # Information zum Phising
-    def get_information_phising(self):
-        return self.df.loc[self.df['Angriffspunkt'] == 'Phising']['Information']
+    # Information zum Phishing
+    def get_information_phishing(self):
+        filter = self.df[self.df['Angriffspunkt'] == 'Phishing']
+        return filter.iloc[0]['Information']
 
     # Information zum komp. Anmeldedaten
     def get_information_login(self):
-        return self.df.loc[self.df['Angriffspunkt'] == 'Kompromittierte Anmeldedaten']['Information']
+        filter = self.df[self.df['Angriffspunkt'] == 'kompromittierte Anmeldedaten']
+        return filter.iloc[0]['Information']
 
     # Treemap-Mensch erstellen
     def create_treemap_mensch(self):

@@ -9,7 +9,6 @@ import random
 import datetime
 from plotly.colors import n_colors
 
-from sqlalchemy import false
 
 class Charts_DataBreaches():
 
