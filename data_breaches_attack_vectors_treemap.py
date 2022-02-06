@@ -71,11 +71,19 @@ class Chart_AttackVectors():
             return "Systemschwächen sind häufig Ziele von Hackern. Dabei können alle möglichen Systeme angegriffen werden, die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden können externe Sicherheitsfirmen beauftragt werden, die einen Angriff simuliert."
         return self.df.loc[self.df['Angriffspunkt'] == clickData['points'][0]['label']]['Information']
 
+    # Information zum Phising
+    def get_information_phising(self):
+        return self.df.loc[self.df['Angriffspunkt'] == 'Phising']['Information']
+
+    # Information zum komp. Anmeldedaten
+    def get_information_login(self):
+        return self.df.loc[self.df['Angriffspunkt'] == 'Kompromittierte Anmeldedaten']['Information']
+
     # Treemap-Mensch erstellen
     def create_treemap_mensch(self):
         self.edit_df()
-        df = self.df[self.df['Fehler']=='Mensch']
-        fig_mensch = px.treemap(self.df,  path=[px.Constant("Mensch"), 'Angriffspunkt'], values='Häufigkeit von Data Breaches',labels= 'Angriffspunkt',color_continuous_scale=[[0, 'rgb(7, 37, 66)'], [1.0, 'rgb(77, 219, 227)']], maxdepth = 2, color='Häufigkeit von Data Breaches', 
+        df_mensch = self.df[self.df['Fehler']=='Mensch']
+        fig_mensch = px.treemap(df_mensch,  path=[px.Constant("Mensch"), 'Angriffspunkt'], values='Häufigkeit von Data Breaches',labels= 'Angriffspunkt',color_continuous_scale=[[0, 'rgb(7, 37, 66)'], [1.0, 'rgb(77, 219, 227)']], maxdepth = 2, color='Häufigkeit von Data Breaches', 
         hover_data=['Angriffspunkt'])
         fig_mensch.update_layout(clickmode='event+select')
         fig_mensch.update_layout(

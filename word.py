@@ -11,6 +11,10 @@ from docx.shared import Pt
 from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches
 from data_breaches_attack_vectors_treemap import Chart_AttackVectors
 from phishing_graphs import Phishing_Graphs
+from passwords_wordcloud import Chart_WordCloud
+
+import numpy as np
+
 
 date = datetime.date.today()
 actual_year = date.strftime("%Y")
@@ -20,13 +24,23 @@ actual_year = date.strftime("%Y")
 dbr = Charts_DataBreaches()
 dbr.update_bubblechart_by_year(int(actual_year) -1, False).write_image("fig_bubblechart.png")
 dbr.create_lineplot(int(actual_year) -1, False).write_image("fig_lineplot.png")
+dbr.create_table().write_image('fig_table.png')
+
+
 #Cyber Attacken
 atp = Chart_AttackVectors()
 atp.fig.write_image("treemap.png")
 atp.create_treemap_mensch().write_image("treemap_mensch.png")
 #Phishing
 pg = Phishing_Graphs()
-pg.get_link_donut().write_image("phising_link.png")
+pg.get_link_donut(False).write_image("phising_link.png")
+pg.get_input_donut(False).write_image("phising_input.png")
+pg.get_attach_donut(False).write_image("phising_attach.png")
+pg.get_fail_bar('Branche', None, False).write_image("fail_bar_mark.png")
+pg.get_fail_bar('Abteilung', None, False).write_image("fail_bar_type_name.png")
+#WordCloud
+wc = Chart_WordCloud()
+wc.create_wordcloud(False).save("word_cloud.png", format="png")
 
 #Dokument laden
 document = Document('LaCTiS_Report - Template.docx')
@@ -61,7 +75,7 @@ last_paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
 #Einleitung
 einleitung = document.add_paragraph('Die digitale Transformation bietet den meisten Unternehmen viele neue und bedeutende Chancen.'\
-'Schnell wird jedoch klar, dass diese Transformation auch Risiken herbeiführen kann. Dabei ist fast jeder,' \
+'Schnell wird jedoch klar, dass diese Transformation auch Risiken herbeiführen kann. Dabei ist fast jeder, ' \
 'also Unternehmen, öffentliche Institutionen, andere Organisationen sowie Privatpersonen das Ziel von Cyber-Attacken.' \
 'Die Bedrohungslage nimmt stetig zu. Ziel sind die sensiblen und wertvollen Daten. '\
 'Cyber Security wird in vielen deutschen Unternehmen vernachlässigt. Oft können die Unternehmen die Risiken der Cyberkriminalität nicht abschätzen.' \
@@ -92,6 +106,12 @@ last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches im Jahr 2021')
 abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
+document.add_picture('fig_table.png', width=Inches(3.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Data Breaches von Jahr 2014 bis 2021 inklusive der Mediane')
+table_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
 #Seitenumbruch
 document.add_page_break()
 
@@ -106,7 +126,7 @@ abbildung_3.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 document.add_picture('treemap_mensch.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_4 = document.add_paragraph('Abbildung 4: Cyber Attacken mit Angriffsvektor Mensch')
+abbildung_4 = document.add_paragraph('Abbildung 400: Cyber Attacken mit Angriffsvektor Mensch')
 abbildung_4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 #Seitenumbruch
@@ -114,12 +134,46 @@ document.add_page_break()
 
 #Thema Phising
 heading3 = document.add_heading('Phising', level = 1)
-document.add_picture('phising_link.png', width=Inches(6.0))
+document.add_picture('phising_link.png', width=Inches(4.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_5 = document.add_paragraph('Abbildung 5: Cyber Attacken nach Angriffsvektor Mensch und System aufgeteilt')
+abbildung_5 = document.add_paragraph('Abbildung 5: Phising via Link')
 abbildung_5.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
+document.add_picture('phising_input.png', width=Inches(4.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_6 = document.add_paragraph('Abbildung 6: Phising via Input')
+abbildung_6.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+document.add_picture('phising_attach.png', width=Inches(4.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_6 = document.add_paragraph('Abbildung 6: Phising via Anhang')
+abbildung_6.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+document.add_picture('fail_bar_mark.png', width=Inches(5.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_7 = document.add_paragraph('Abbildung 7: Phising nach Branche')
+abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+document.add_picture('fail_bar_type_name.png', width=Inches(5.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_7 = document.add_paragraph('Abbildung 7: Phising nach Branche')
+abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+#Seitenumbruch
+document.add_page_break()
+
+#Thema Passwortsicherheit
+heading4 = document.add_heading('Passwortsicherheit', level = 1)
+document.add_picture('word_cloud.png', width=Inches(3.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+abbildung_5 = document.add_paragraph('Abbildung 8: Wordcloud zu den meist genutzten Passwörtern')
+abbildung_5.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 
 document.save('LaCTiS_Report.docx')
