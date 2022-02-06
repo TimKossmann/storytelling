@@ -168,7 +168,7 @@ class PasswordPage():
                         className="download-wrapper",
                         children=
                         [
-                            html.Button("Excel herunterladen", className="btn_csv", id="password_btn"),
+                            html.Button("Daten herunterladen", className="btn_csv", id="password_btn"),
                             dcc.Download(id="download-password-excel"),
                         ]
                     )        

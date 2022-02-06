@@ -71,7 +71,7 @@ class PhishingPage():
                         className="download-wrapper",
                         children=
                         [
-                            html.Button("Excel herunterladen", className="btn_csv", id="phishing_btn"),
+                            html.Button("Daten herunterladen", className="btn_csv", id="phishing_btn"),
                             dcc.Download(id="download-phishing-excel"),
                         ]
                     )

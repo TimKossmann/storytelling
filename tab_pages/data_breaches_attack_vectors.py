@@ -56,7 +56,7 @@ class AttackVectorsPage():
                         className="download-wrapper",
                         children=
                         [
-                            html.Button("CSV herunterladen", className="btn_csv", id="attack_vectors_btn"),
+                            html.Button("Daten herunterladen", className="btn_csv", id="attack_vectors_btn"),
                             dcc.Download(id="download-attack_vectors-excel"),
                         ]
                     )         

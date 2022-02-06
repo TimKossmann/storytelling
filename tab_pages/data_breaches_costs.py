@@ -69,7 +69,7 @@ class DataBreachesPage():
                         className="download-wrapper",
                         children=
                         [
-                            html.Button("CSV herunterladen", className="btn_csv", id="data_breaches_btn"),
+                            html.Button("Daten herunterladen", className="btn_csv", id="data_breaches_btn"),
                             dcc.Download(id="download-data-breches-excel"),
                         ]
                     )
