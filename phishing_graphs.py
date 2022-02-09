@@ -59,6 +59,10 @@ class Phishing_Graphs():
             avg_line_color = "rgb(32, 59, 85)"
         df = self.fail_df[self.fail_df["Art"] == type_name]
         df["Fehlerquote (%)"] = (df["Fehlerquote (%)"]*100).round()
+        df["Name"] = df["Name"].str.replace(" und ", "& ")
+        df["Name"] = df["Name"].str.replace(" ", "<br>")
+        df["Name"] = df["Name"].str.replace("&", " &")
+        df["Name"] = df["Name"].str.replace("/", "/<br>")
         df.reset_index(drop=True, inplace=True)
         color_map = {}
         for index, row in df.iterrows():
