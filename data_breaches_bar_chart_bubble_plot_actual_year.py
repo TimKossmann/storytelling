@@ -284,19 +284,20 @@ class Charts_DataBreaches():
                                     'organisation': 'Unternehmen',
                                     'records lost': 'Schaden in US$'}, inplace = True)
         
-        df_fig_median = self.df.groupby('year')['records lost'].median().reset_index()
-        df_fig_median.rename(columns={'year': 'Jahr',
-                                    'records lost': 'Median in US$'}, inplace = True)
+        df_fig_mean = self.df.groupby('year')['records lost'].mean().reset_index()
+        df_fig_mean.rename(columns={'year': 'Jahr',
+                                    'records lost': 'Mittelwert in US$'}, inplace = True)
 
-        # Median Tabelle in erste einfügen
-        df_fig_all = pd.merge(df_fig_table, df_fig_median, how='inner', on='Jahr')
-        df_fig_all
-
+        # Mittelwert Tabelle in erste einfügen
+        df_fig_all = pd.merge(df_fig_table, df_fig_mean, how='inner', on='Jahr')
+        
         # Schaden Zahlen abkürzen
-        df_fig_all['Schaden in Mio. US$'] = df_fig_all['Schaden in US$'] 
-        df_fig_all['Median in Mio. US$'] = df_fig_all['Median in US$'] 
+        df_fig_all['Schaden in Mio. US$'] = df_fig_all['Schaden in US$'] / 1000000
+        df_fig_all['Mittelwert in Mio. US$'] = df_fig_all['Mittelwert in US$'] / 1000000
+
         del df_fig_all['Schaden in US$']
-        del df_fig_all['Median in US$']
+        del df_fig_all['Mittelwert in US$']
+        df_fig_all['Mittelwert in Mio. US$'] = df_fig_all['Mittelwert in Mio. US$'].round(0)
 
         #Zeilen löschen nur die letzten acht Jahre anzeigen
         max_Jahre = df_fig_all['Jahr'].max()
@@ -304,13 +305,14 @@ class Charts_DataBreaches():
 
         max_Schaden=df_fig_all['Schaden in Mio. US$'].max()
         color_blue = n_colors('rgb(7,37,66)', 'rgb(7,37,66)', 0, colortype='rgb' )
+        colors = n_colors('rgb(211, 246, 248)', 'rgb(31, 188, 197)', int(max_Schaden/10), colortype='rgb')
         self.fig_table = go.Figure(data=[go.Table(
             header=dict(values=list(df_fig_all.columns),
                         fill_color='rgb(77, 219, 227)',
                         align='left',
                         font=dict(color=color_blue)),
-            cells=dict(values=[df_fig_all['Jahr'], df_fig_all['Unternehmen'], df_fig_all['Schaden in Mio. US$'], df_fig_all['Median in Mio. US$']],
-                    fill_color=['rgb(211, 246, 248)','rgb(211, 246, 248)', ['rgb(31, 188, 197)' if x == max_Schaden else 'rgb(211, 246, 248)' for x in list(df_fig_all['Schaden in Mio. US$'])], 'rgb(211, 246, 248)'],
+            cells=dict(values=[df_fig_all['Jahr'], df_fig_all['Unternehmen'], df_fig_all['Schaden in Mio. US$'], df_fig_all['Mittelwert in Mio. US$']],
+                    fill_color=['rgb(211, 246, 248)','rgb(211, 246, 248)', [(colors)[int(x/10)-1] for x in list(df_fig_all['Schaden in Mio. US$'])], 'rgb(211, 246, 248)'],
                     align='right'))
         ])
         return self.fig_table

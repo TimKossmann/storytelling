@@ -35,6 +35,12 @@ class Chart_AttackVectors():
                 'Fehler': 'Fehlerquelle', 
                 'Häufigkeit von Data Breaches': 'Grund für Datenlecks (%)', })
         return res
+    
+    def get_percentage_human(self):
+        df = self.df.groupby('Fehler')['Häufigkeit von Data Breaches'].sum().reset_index()
+        filter = df[df['Fehler'] == 'Mensch']
+        return filter.iloc[0]['Häufigkeit von Data Breaches']
+        
 
     # Treemap erstellen
     def create_treemap(self):

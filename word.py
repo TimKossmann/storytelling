@@ -28,7 +28,7 @@ actual_year = date.strftime("%Y")
 dbr = Charts_DataBreaches()
 dbr.update_bubblechart_by_year(int(actual_year) -1, False).write_image("fig_bubblechart.png")
 dbr.create_lineplot(int(actual_year) -1, False).write_image("fig_lineplot.png")
-dbr.create_table().write_image('fig_table.png')
+dbr.create_table().write_image('fig_table.png', width= 1000, height = 400, scale = 1)
 
 
 #Cyber Attacken
@@ -40,8 +40,8 @@ pg = Phishing_Graphs()
 pg.get_link_donut(False).write_image("phising_link.png")
 pg.get_input_donut(False).write_image("phising_input.png")
 pg.get_attach_donut(False).write_image("phising_attach.png")
-pg.get_fail_bar('Branche', None, False).write_image("fail_bar_mark.png")
-pg.get_fail_bar('Abteilung', None, False).write_image("fail_bar_type_name.png")
+pg.get_fail_bar('Branche', None, False).write_image("fail_bar_mark.png",  width=900, height=800, scale=1)
+pg.get_fail_bar('Abteilung', None, False).write_image("fail_bar_type_name.png", width=900, height=800, scale=1)
 #WordCloud
 wc = Chart_WordCloud()
 wc.create_wordcloud(False).save("word_cloud.png", format="png")
@@ -108,8 +108,23 @@ info_db.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 document.add_picture('fig_lineplot.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-abbildung_1 = document.add_paragraph('Abbildung 1: Data Breaches über die letzten 8 Jahre')
+abbildung_1 = document.add_paragraph('Abbildung 1: Datenlecks über die letzten 8 Jahre inklusive Durchschnitt')
 abbildung_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+info_db2 = document.add_paragraph('In den letzten Jahre ist Summe der Schäden, die durch Datenlecks in den Unternehmen entstanden sind gestiegen (siehe dazu Abbildung 1 und Tabelle 1). '\
+    'Dies hat unter Anderem den Grund, dass Unternehmen immer häufiger Angegriffen werden und'
+    ' durch die Digitalisierung die Menge der Daten in den Unternehmen stetig steigt. Viele Daten die vor einigen Jahren noch lokal in den Unternhemen in Papierform '\
+    'vorlagen, werden heutzutage digitalisiert auf großen Servern gespeichert. Wo es Hackern früher noch gar nicht möglich war auf Daten zuzugreifen, besteht heut für diese ein rießiges Potenzial. '\
+    '')
+info_db2.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
+
+
+document.add_picture('fig_table.png', width=Inches(5.0))
+last_paragraph = document.paragraphs[-1] 
+last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Data Breaches von Jahr 2014 bis 2021 inklusive der Mittelwerte')
+table_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
 document.add_picture('fig_bubblechart.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
@@ -117,22 +132,40 @@ last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches im Jahr 2021')
 abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-document.add_picture('fig_table.png', width=Inches(3.0))
-last_paragraph = document.paragraphs[-1] 
-last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Data Breaches von Jahr 2014 bis 2021 inklusive der Mediane')
-table_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+info_db3 = document.add_paragraph('Gerade bei größeren Unternehmen, die viele Daten speichern, sind die Schäden am höchsten. Haben es die Angreifer geschafft '\
+    'Zugriff zu erlangen, können sie meist direkt viele Daten abgreifen. Oft sind Unternehmen betroffen, die viele personenbezogene Daten speichern, wie bspw. Facebook und Linkedin. '\
+    '')
+info_db3.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
 #Seitenumbruch
 document.add_page_break()
 
 #Thema Cyber Attacken
 heading2 = document.add_heading('Cyber Attacken', level = 1)
+info_ca = document.add_paragraph('Hacker haben verschiedene Angriffsziele. Zunächst denkt man dabei an Hackerangriffe auf Systeme, bei '\
+    'dem der Angreifer die Schwächen des System ausnuzt. Allerdings können auch Menschen in das Ziel von Hackern geraten. Dabei ist das '\
+    'Ziel oft, Menschen zu manipulieren oder sie bestimmte Handlungen ausführen zu lassen, sodass der Angreifer Zugang zum System bekommt.')
+info_ca.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+mensch = atp.get_percentage_human()
+info_percantage = 'Im Jahr', str(int(actual_year) - 1), 'ist die Aufteilung der Cyberattacken ', str(mensch), ' % Mensch und ', str(100 - mensch), ' % System.' 
+info_ca1 = document.add_paragraph(info_percantage)
+info_ca1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 document.add_picture('treemap.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
 last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_3 = document.add_paragraph('Abbildung 3: Cyber Attacken nach Angriffsvektor Mensch und System aufgeteilt')
 abbildung_3.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+info_ca4 = document.add_paragraph('Systemschwächen sind häufig Ziele von Hackern. Dabei können alle möglichen Systeme angegriffen werden, '\
+    'die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden können externe Sicherheitsfirmen beauftragt werden, '\
+    'die einen Angriff simuliert.')
+info_ca4.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+heading = document.add_paragraph().add_run('Angriffsvektor Mensch')
+heading.bold=True
+info_ca5 = document.add_paragraph('Menschliches Fehlverhalten sind eine häufige Ursache für Datenlecks. Meist rührt das Fehlverhalten von '\
+    'Unwissenheit oder Unachtsamkeit. Gegen Unachtsamkeit und mutwilliges böswilliges Verhalten kann leider schwer etwas unternommen werden. '\
+    'Aber gegen Unwissenheit helfen Schulungen und Sensibilisierungskurse, die maßgeblich zum Schutz des Unternehmens beiträgt.')
+info_ca5.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
 document.add_picture('treemap_mensch.png', width=Inches(6.0))
 last_paragraph = document.paragraphs[-1] 
@@ -275,11 +308,11 @@ last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
 abbildung_8 = document.add_paragraph('Abbildung 8: Wordcloud zu den meist genutzten Passwörtern (Quelle: information is beautiful, 2021b)')
 abbildung_8.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-info_psw5 =  document.add_paragraph().add_run('Neben Datenlecks sind schlecht gewählte Passwörter die größte Sicherheitslücke. Hacker können mit Hilfe automtischer Programme tausende Zeichenkombinationen in wenigen Sekunden testen. '\
+info_psw5 =  document.add_paragraph('Neben Datenlecks sind schlecht gewählte Passwörter die größte Sicherheitslücke. Hacker können mit Hilfe automtischer Programme tausende Zeichenkombinationen in wenigen Sekunden testen. '\
     'Ein gutes Passwort ist mindestens zehn Zeichenlang, enthält Buchstaben, Zahlen sowie Sonderzeichen und ist für jede Plattform unterschiedlich. Zur Unterstützung beim der Erstellung von Passwörtern hift die Satzregel. '\
     'Dabei wird sich ein Satz überlegt. Zum Beispiel: Mein kleiner Kater Findus spielt gerne im Garten und ist sechs Jahre alt. Für ihr Passwort nehmen sie von jedem Wort ausschließlich den ersten Buchstaben und ersetzen bspw. und mit dem &-Zeichen. '\
     'Aus dem Beispielsatz würde dann folgendes Passwort entstehen: MkKFsgiG&i6Ja. (Verbraucherzentrale, 2021)' )
-info_psw5.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+info_psw5.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
 
 
