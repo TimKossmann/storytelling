@@ -127,20 +127,37 @@ class Phishing_Graphs():
              )
         return fig
 
-    def get_link_donut(self, darkmode=True):
+    def get_text_for_dounut(self, dounut_type):
+        text_dounut = {
+            "link": "68% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen",
+            "input": "Bei 23% der Phishing Mails sollen der Nutzer <br> sensible Daten angeben",
+            "attach": "9% aller Phishing Mails zielen darauf ab, den <br> Nutzer den Anhang öffnen zu lassen"
+        }
+        return text_dounut[dounut_type]
+
+    def get_link_donut(self, darkmode=True, show_text=True):
         fig = px.pie({"link/no_link": ["Link", "No"], "value": [self.link, 100-self.link]}, names="link/no_link", values="value", hole=0.7, color="link/no_link", 
         color_discrete_map={"Link": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "E269", "Link aufrufen", darkmode, "68% der Phishing Mails sollen den Nutzer <br> dazu Veranlassen einen Link zu öffnen")
+        text = ""
+        if show_text:
+            text = self.get_text_for_dounut("link")
+        return self.update_donut_fig(fig, "E269", "Link aufrufen", darkmode, text)
     
-    def get_input_donut(self, darkmode=True):
+    def get_input_donut(self, darkmode=True, show_text=True):
         fig = px.pie({"input/no_input": ["Input", "No"], "value": [self.input, 100-self.input]}, names="input/no_input", values="value", hole=0.7, color="input/no_input", 
         color_discrete_map={"Input": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "2328_color", "Daten eingeben", darkmode, "Bei 23% der Phishing Mails sollen der Nutzer <br> sensible Daten angeben")
+        text = ""
+        if show_text:
+            text = self.get_text_for_dounut("input")
+        return self.update_donut_fig(fig, "2328_color", "Daten eingeben", darkmode, text)
     
-    def get_attach_donut(self, darkmode=True):
+    def get_attach_donut(self, darkmode=True, show_text=True):
         fig = px.pie({"attach/no_attach": ["Attach", "No"], "value": [self.attach, 100-self.attach]}, names="attach/no_attach", values="value", hole=0.7, color="attach/no_attach", 
         color_discrete_map={"Attach": 'rgb(62, 175, 182)', "No": 'rgb(57, 81, 104)'})
-        return self.update_donut_fig(fig, "1F4CE", "Anhang öffnen", darkmode, "9% aller Phishing Mails zielen darauf ab, den <br> Nutzer den Anhang öffnen zu lassen")
+        text = ""
+        if show_text:
+            text = self.get_text_for_dounut("attach")
+        return self.update_donut_fig(fig, "1F4CE", "Anhang öffnen", darkmode, text)
 
     def update_donut_fig(self, fig, img_name, txt, darkmode, expl_txt="" ):
         if darkmode:

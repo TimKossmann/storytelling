@@ -40,7 +40,7 @@ class PasswordPage():
         if (pw == ""):
             return
         
-        pw_per_second = 100000000000
+        pw_per_second = 1000000000
 
         possibles = 0
 

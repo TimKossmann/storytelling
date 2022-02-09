@@ -9,8 +9,6 @@ import random
 import datetime
 from plotly.colors import n_colors
 
-from sqlalchemy import false
-
 class Charts_DataBreaches():
 
     def __init__(self):
@@ -84,9 +82,24 @@ class Charts_DataBreaches():
     def create_lineplot(self, year, darkmode=True): 
         if darkmode:
             color = "white"
+            bg_color = "rgba(7, 37, 66, 0.8)"
         else:
             color = "black"  
-        df_fig1 = (pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum()/1000).reset_index())
+            bg_color = "rgba(255, 255, 255, 0.8)"
+        avg_year = {"year": [],
+                    "avg": []}
+        avg = 0
+        sum_df = pd.DataFrame(self.df.groupby(by=['year'])['records lost'].sum()/1000).reset_index()
+        for year_i in range(2014,2022):
+            filter_row = sum_df[sum_df["year"] == year_i]
+
+            avg += filter_row.iloc[0]['records lost']
+            print(avg)
+            avg_year["year"].append(year_i)
+            avg_year["avg"].append(avg/(year_i-2013))
+        
+
+        df_fig1 = (sum_df)
         df_fig1 = df_fig1.loc[df_fig1["year"]>= 2014]
         # print(df_fig1.head())
         fig = px.line(df_fig1, x="year", y="records lost", 
@@ -143,6 +156,7 @@ class Charts_DataBreaches():
                 
                 ),
             )
+        
 
         fig.update_traces(
             marker = dict(
@@ -155,6 +169,18 @@ class Charts_DataBreaches():
                 width = 2
             ),
         )
+
+        avg_fig = px.line(avg_year, x="year", y="avg", 
+                                title='Testtitle', markers=False, line_shape='spline')
+        avg_fig.update_traces(
+           
+            line = dict(
+                smoothing=0.8,
+                color = 'rgb(159, 90, 253)',
+                width = 4
+            ),
+        )
+
         #Add Annotation under Title
         """
         fig.add_annotation(x=0,y=1.1,
@@ -164,21 +190,66 @@ class Charts_DataBreaches():
                             valign="top",
             yref="y domain", showarrow=False)
         """
-
-
-        fig2 = px.scatter(df_fig1.loc[df_fig1["year"] == year], x="year", y="records lost")
-
+        print(avg_year["year"])
+        print(year)
+        print(avg_year["year"].index(year))
+        avg_point = avg_year['avg'][avg_year["year"].index(year)]
+        sum_for_year = sum_df[sum_df["year"] == year].iloc[0]['records lost']
+        switcher = 1
+        if (sum_for_year < avg_point):
+            switcher = -1
+        fig2 = px.scatter({"year": [year], "avg":avg_point}, x="year", y="avg")
+        fig3 = px.scatter({"year": [year], "avg":sum_for_year}, x="year", y="avg")
+        fig.add_annotation(
+            x=year,
+            y=avg_point,
+            xref="x",
+            yref="y",
+            ayref="y",
+            yshift=-30*switcher,
+            font=dict(
+                size=14,
+                color="rgb(159, 90, 253)"
+                ),
+            text=f"Durchschnitt<br> {int(avg_point.round()):,} $".replace(",", "."),
+            showarrow=False,
+            bgcolor=bg_color,
+        )
+        fig.add_annotation(
+            x=year,
+            y=sum_for_year,
+            xref="x",
+            yref="y",
+            ayref="y",
+            yshift=50*switcher,
+            font=dict(
+                size=14,
+                color="#4DDBE3"
+                ),
+            text=f"Schaden im<br>Jahr {year}:<br> {int(sum_for_year.round()):,} $".replace(",", "."),
+            showarrow=False,
+            bgcolor=bg_color,
+            
+        )
 
         fig2.update_traces(
             marker = dict(
                 color = 'rgb(159, 90, 253)',
                 size = 15,
-                
-
             ),
         )
 
+        fig3.update_traces(
+            marker = dict(
+                color = '#4DDBE3',
+                size = 15,
+            ),
+        )
+        fig.add_traces(avg_fig.data[0])
+        fig.add_trace(fig3.data[0])
         fig.add_trace(fig2.data[0])
+        
+        
 
         return fig
 
@@ -320,7 +391,9 @@ class Charts_DataBreaches():
                 
 
 
-
+if __name__ == "__main__":
+    chart = Charts_DataBreaches()
+    chart.create_lineplot(2021)
 
 
 
