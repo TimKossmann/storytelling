@@ -37,9 +37,9 @@ atp.fig.write_image("treemap.png")
 atp.create_treemap_mensch().write_image("treemap_mensch.png")
 #Phishing
 pg = Phishing_Graphs()
-pg.get_link_donut(False).write_image("phising_link.png")
-pg.get_input_donut(False).write_image("phising_input.png")
-pg.get_attach_donut(False).write_image("phising_attach.png")
+pg.get_link_donut(False, False).write_image("phising_link.png")
+pg.get_input_donut(False, False).write_image("phising_input.png")
+pg.get_attach_donut(False, False).write_image("phising_attach.png")
 pg.get_fail_bar('Branche', None, False).write_image("fail_bar_mark.png",  width=900, height=800, scale=1)
 pg.get_fail_bar('Abteilung', None, False).write_image("fail_bar_type_name.png", width=900, height=800, scale=1)
 #WordCloud
