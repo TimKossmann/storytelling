@@ -130,6 +130,12 @@ class Phishing_Graphs():
 
              )
         return fig
+    
+    def get_mean(self, type_name):
+        df = self.fail_df[self.fail_df["Art"] == type_name]
+        mean = (df['Fehlerquote (%)'].mean())*100
+        return int(mean)
+
 
     def get_text_for_dounut(self, dounut_type):
         text_dounut = {
