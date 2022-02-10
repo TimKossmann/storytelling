@@ -132,6 +132,8 @@ class Powerpoint():
         phishing_slide = self.pp.slides.add_slide(self.pp.slide_layouts[1])
         title = phishing_slide.placeholders[0]
         title.text = "Was wollen Phishing Angriffe?"
+        
+        
         added_img = 0
         added_txt = 0
 
