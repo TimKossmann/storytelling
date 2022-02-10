@@ -246,32 +246,37 @@ formel_psw.alignment = WD_ALIGN_PARAGRAPH.CENTER
 psw_hinweis = document.add_paragraph('Hinweis: Es wird angenommen, dass 1 Milliarde Versuche in einer Sekunde getätigt werden können')
 
 data = [
-    ['0-9', '10', '6', '1.000.000', '1 s'],
-    ['', '', '6',  '100.000.000', '100 s'],
-    ['', '', '10', '10.000.000.000', '2,8 h'],
-    ['A-Z, a-z, 0-9', '10', '6', '1.000.000', '1 s'],
-    ['', '', '6',  '100.000.000', '100 s'],
-    ['', '', '10', '10.000.000.000', '2,8 h'],
-    ['A-Z, a-z, 0-9, ()[]{}?!$%&/=*+~,.;:<>-_', '10', '6', '1.000.000', '1 s'],
-    ['', '', '6',  '100.000.000', '100 s'],
-    ['', '', '10', '10.000.000.000', '2,8 h']
+    ['0-9', '10', '6', '1.000.000', '0,001 s'],
+    ['', '', '8',  '100.000.000', '0,1 s'],
+    ['', '', '10', '10.000.000.000', '10 s'],
+    ['A-Z, a-z, 0-9', '10', '6', '56.800.235.584', '56 s'],
+    ['', '', '8',  '218.340.105.584.896', '12 h'],
+    ['', '', '10', '839.299.365.868.340.224', '26 Jahre'],
+    ['A-Z, a-z, 0-9, ', '10', '6', '404.567.235.136', '11 min'],
+    ['()[]{}?!$%&', '', '8',  '2.992.179.271.065.856', '13 h'],
+    ['=*+~,.;:<>-_', '', '10', '22.130.157.888.803.070.976', '1700 Jahre']
 ]
 table_psw = document.add_table(rows = 1, cols = 5)
 table_psw.style='Medium Shading 2 Accent 5'
 header_cells = table_psw.rows[0].cells
 header_cells[0].text = 'Verwendetes\nAlphabet'
 header_cells[1].text = 'Anzahl der möglichen Zeichen'
-header_cells[2].text = 'Länge des Passworts'
+header_cells[2].text = 'Länge des Pass-\nworts'
 header_cells[3].text = 'Anzahl der möglichen Kombinationen'
 header_cells[4].text = 'Zeit der vollständigen Suche'
 
 for alphabet, anzahl, laenge, kombinationen, time in data:
     row_cells = table_psw.add_row().cells
-    row_cells[0].text = alphabet
+    row_cells[0].text = alphabet.strip()
     row_cells[1].text = anzahl
     row_cells[2].text = laenge
     row_cells[3].text = kombinationen
+    row_cells[3].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
     row_cells[4].text = time
+    
+    
+
+
 
 table_psw.cell(2,1).merge(table_psw.cell(3,1))
 table_psw.cell(1,1).merge(table_psw.cell(2,1))
