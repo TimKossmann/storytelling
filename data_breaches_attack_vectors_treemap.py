@@ -40,7 +40,11 @@ class Chart_AttackVectors():
         df = self.df.groupby('Fehler')['Häufigkeit von Data Breaches'].sum().reset_index()
         filter = df[df['Fehler'] == 'Mensch']
         return filter.iloc[0]['Häufigkeit von Data Breaches']
-        
+
+    def get_percentage_for_attack_vectors(self, attackVector):
+        filter = self.df[self.df['Angriffspunkt'] == attackVector]
+        return int(filter.iloc[0]['Häufigkeit von Data Breaches']/self.get_percentage_human()*100)
+
 
     # Treemap erstellen
     def create_treemap(self):
