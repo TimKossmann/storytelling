@@ -138,7 +138,7 @@ class PDF():
 
         info_db3 = document.add_paragraph('Gerade bei größeren Unternehmen, die viele Daten speichern, sind die Schäden am höchsten. Haben es die Angreifer geschafft '\
             'Zugriff zu erlangen, können sie meist direkt viele Daten abgreifen. Oft sind Unternehmen betroffen, die viele personenbezogene Daten speichern, wie bspw. Facebook und Linkedin. '\
-            '')
+            '(Siehe dazu Abb. 2')
         info_db3.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
         #Seitenumbruch
@@ -151,7 +151,7 @@ class PDF():
             'Ziel oft, Menschen zu manipulieren oder sie bestimmte Handlungen ausführen zu lassen, sodass der Angreifer Zugang zum System bekommt.')
         info_ca.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         mensch = atp.get_percentage_human()
-        info_percantage = 'Im Jahr ', str(int(actual_year) - 1), ' liegt die Verteilung der Cyberattacken bei ', str(mensch), ' % Mensch und ', str(100 - mensch), ' % System.' 
+        info_percantage = 'Wie auch in Abbildung 3 zu erkennen liegt im Jahr ', str(int(actual_year) - 1), ' liegt die Verteilung der Cyberattacken bei ', str(mensch), ' % Mensch und ', str(100 - mensch), ' % System.' 
         info_ca1 = document.add_paragraph(info_percantage)
         info_ca1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         document.add_picture('treemap.png', width=Inches(6.0))
@@ -171,12 +171,8 @@ class PDF():
             'Aber gegen Unwissenheit helfen Schulungen und Sensibilisierungskurse, die maßgeblich zum Schutz des Unternehmens beiträgt.')
         info_ca5.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-        document.add_picture('treemap_mensch.png', width=Inches(6.0))
-        last_paragraph = document.paragraphs[-1] 
-        last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        abbildung_4 = document.add_paragraph('Abbildung 4: Cyber Attacken mit Angriffsvektor Mensch (Quelle: IBM, 2021)')
-        abbildung_4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        info_ca5 = document.add_paragraph().add_run('Verteilung der Cyber Attacken mit Angriffsvektor Mensch ')
+        
+        info_ca5 = document.add_paragraph().add_run('Verteilung der Cyber Attacken mit Angriffsvektor Mensch (siehe Abb.4)')
         info_ca5.bold = True
         kom_an = atp.get_percentage_for_attack_vectors('kompromittierte Anmeldedaten')
         phish = atp.get_percentage_for_attack_vectors('Phishing')
@@ -188,6 +184,11 @@ class PDF():
         document.add_paragraph('Böswilliger Insider: '+ str(insider) + ' %', style='List Bullet')
         document.add_paragraph('Versehentlicher Datenverlust/verlorenes Gerät: '+ str(datenlost) + ' %', style='List Bullet')
         document.add_paragraph('Kompromittierung von Geschäfts-E-Mails: '+ str(mail) + ' %', style='List Bullet')
+        document.add_picture('treemap_mensch.png', width=Inches(6.0))
+        last_paragraph = document.paragraphs[-1] 
+        last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        abbildung_4 = document.add_paragraph('Abbildung 4: Cyber Attacken mit Angriffsvektor Mensch (Quelle: IBM, 2021)')
+        abbildung_4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         info = document.add_paragraph('Im Folgenden werden die zwei größten Angriffsvektoren beim Angriffsvektor Mensch näher beschrieben.')
         info.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY 
         login = document.add_paragraph().add_run('Angriffsvektor kompromittierte Anmeldedaten')
@@ -210,7 +211,7 @@ class PDF():
         #Thema Phishing
         heading3 = document.add_heading('Phishing', level = 1)
         phishing_info2 = document.add_paragraph('Die meist verbreitetsten Arten von Phishing sind das Senden eines URL-Hyperlinks, die Anfrage einer Dateneingabe und ein an eine E-Mail angefügter Anhang. '\
-        'Dabei sind Phishing Angriffe am meisten verbreitet. Die Angreifer sind über die letzten Jahre immer erfinderischer geworden. Oft verstecken sich Angreifer hinter weitverbreiteten und vertrauenswürdigen Diensten und '\
+        'Dabei sind Phishing Angriffe per URL-Hyperlink am meisten verbreitet (siehe Abb.5 - 7). Die Angreifer sind über die letzten Jahre immer erfinderischer geworden. Oft verstecken sich Angreifer hinter weitverbreiteten und vertrauenswürdigen Diensten und '\
         'täuschen so ihre Opfer, indem sie sich als echt ausgeben. Zu den meist verwendeten Themen von Phishing gehören bspw. Microsoft Teams-Anfragen, Coronavirus-Alarmmeldungen, aber auch Starbucks-Bonus oder UPS-Versandbenachrichtigungen. '\
         'Oft versuchen Angreifer ihre Opfer mit raffinierten Themen wie kostenlosen Angeboten, Rabatten oder Ticketvorverkäufen zu überzeugen. (Proofpoint, 2021)')
         phishing_info2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -241,7 +242,7 @@ class PDF():
         abbildung_7 = document.add_paragraph().add_run(str(text_link))
         abbildung_7.alignment = WD_ALIGN_PARAGRAPH.CENTER
         abbildung_7.bold=True
-        abbildung_7 = document.add_paragraph('Abbildung 6: Phishing via Anhang (Quelle: Proofpoint, 2021)')
+        abbildung_7 = document.add_paragraph('Abbildung 7: Phishing via Anhang (Quelle: Proofpoint, 2021)')
         abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         mean_branche = pg.get_mean('Branche')
         mean_abteilung = pg.get_mean('Abteilung')
@@ -253,18 +254,18 @@ class PDF():
         document.add_picture('fail_bar_mark.png', width=Inches(5.0))
         last_paragraph = document.paragraphs[-1] 
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        abbildung_7 = document.add_paragraph('Abbildung 7: Phishing nach Branche')
+        abbildung_7 = document.add_paragraph('Abbildung 8: Phishing nach Branche')
         abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         phishing_info3 = document.add_paragraph('Fehlerquoten betrachtet auf einzelnen Abteilungsebene legt einen ausführlichen Überblick über mögliche ' \
         'Schwachstellen im Unternehmen. Angreifer haben meist einzelne Posteingänge und E-Mail-Aliase im Blick für einen Angriff. Eine Fehlerquote ' \
-        'auf Unternehmensebene allein stellt nicht dar, bei welchen Teams oder Aufgabenbereiche möglicherweise Probleme auftreten. (Proofpoint, 2021)')
+        'auf Unternehmensebene allein stellt nicht dar, bei welchen Teams oder Aufgabenbereiche möglicherweise Probleme auftreten.(siehe dazu Abb. 8) (Proofpoint, 2021)')
         phishing_info3.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
         document.add_picture('fail_bar_type_name.png', width=Inches(5.0))
         last_paragraph = document.paragraphs[-1] 
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        abbildung_7 = document.add_paragraph('Abbildung 8: Phishing nach Branche (Quelle: Proofpoint, 2021)')
+        abbildung_7 = document.add_paragraph('Abbildung 9: Phishing nach Branche (Quelle: Proofpoint, 2021)')
         abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         #Seitenumbruch
@@ -358,12 +359,12 @@ class PDF():
         psw_header3 =  document.add_paragraph().add_run('Meist verwendete Passwörter')
         psw_header3.bold = True
         info_psw4 =  document.add_paragraph().add_run('Die meist verwendeten Passwörter lassen sich in elf Kategorien einteilen. Namen, machohafte Begriffe und einfache alphanumerische Zeichenketten sind '\
-            'die meist verwendeten Passwortkategorien (information is beautiful, 2021b)')
+            'die meist verwendeten Passwortkategorien. (siehe Abb. 10) (information is beautiful, 2021b)')
 
         document.add_picture('word_cloud.png', width=Inches(3.0))
         last_paragraph = document.paragraphs[-1] 
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        abbildung_8 = document.add_paragraph('Abbildung 9: Wordcloud zu den meist genutzten Passwörtern (Quelle: information is beautiful, 2021b)')
+        abbildung_8 = document.add_paragraph('Abbildung 10: Wordcloud zu den meist genutzten Passwörtern (Quelle: information is beautiful, 2021b)')
         abbildung_8.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         info_psw5 =  document.add_paragraph('Neben Datenlecks sind schlecht gewählte Passwörter die größte Sicherheitslücke. Hacker können mit Hilfe automtischer Programme tausende Zeichenkombinationen in wenigen Sekunden testen. '\
