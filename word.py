@@ -352,14 +352,16 @@ class PDF():
 
         info_psw3 = document.add_paragraph('In Tabelle 2 wird deutlich, dass die Länge des Passworte und auch die Anzahl der Zeichen der verwendeten Alphabete eine '\
             'ausschlaggebende Rolle spielen')
-        
+        info_psw3.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+
         #Seitenumbruch
         document.add_page_break()
 
         psw_header3 =  document.add_paragraph().add_run('Meist verwendete Passwörter')
         psw_header3.bold = True
-        info_psw4 =  document.add_paragraph().add_run('Die meist verwendeten Passwörter lassen sich in elf Kategorien einteilen. Namen, machohafte Begriffe und einfache alphanumerische Zeichenketten sind '\
+        info_psw4 =  document.add_paragraph('Die meist verwendeten Passwörter lassen sich in elf Kategorien einteilen. Namen, machohafte Begriffe und einfache alphanumerische Zeichenketten sind '\
             'die meist verwendeten Passwortkategorien. (siehe Abb. 10) (information is beautiful, 2021b)')
+        info_psw4.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
         document.add_picture('word_cloud.png', width=Inches(3.0))
         last_paragraph = document.paragraphs[-1] 
