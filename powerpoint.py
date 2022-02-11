@@ -50,7 +50,7 @@ class Powerpoint():
     def create_pp(self):
         #first_slide = pp.slides.add_slide(layout)
         #pic = first_slide.shapes.add_picture("fail_bar_mark.png", Inches(0), Inches(1.5), height=Inches(5.5))
-
+        self.create_images()
         bubble_side = self.pp.slides.add_slide(self.get_picture_img_layout())
         title = bubble_side.placeholders[0]
         title.text = "Warum brauch ich das?"
