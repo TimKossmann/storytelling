@@ -382,7 +382,6 @@ class PDF():
         doc.SaveAs(outputFile, FileFormat=wdFormatPDF)
         doc.Close()
         word.Quit()'''
-        
         convert('LaCTiS_Report.docx','LaCTiS_Report.pdf')
 
 if __name__ == "__main__":
