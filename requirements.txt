@@ -1,0 +1,11 @@
+dash
+pandas
+plotly
+numpy
+matplotlib
+wordcloud
+python-docx
+pywin32
+pyhton-pptx
+xlsx-writer
+
