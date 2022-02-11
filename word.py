@@ -84,16 +84,16 @@ class PDF():
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.RIGHT
 
         #Einleitung
-        einleitung = document.add_paragraph('Die digitale Transformation bietet den meisten Unternehmen viele neue und bedeutende Chancen.'\
+        einleitung = document.add_paragraph('Die digitale Transformation bietet den meisten Unternehmen viele neue und bedeutende Chancen. '\
         'Schnell wird jedoch klar, dass diese Transformation auch Risiken herbeiführen kann. Dabei ist fast jeder, ' \
-        'also Unternehmen, öffentliche Institutionen, andere Organisationen sowie Privatpersonen das Ziel von Cyber-Attacken.' \
+        'also Unternehmen, öffentliche Institutionen, andere Organisationen sowie Privatpersonen das Ziel von Cyber-Attacken. ' \
         'Die Bedrohungslage nimmt stetig zu. Ziel sind die sensiblen und wertvollen Daten. '\
-        'Cyber Security wird in vielen deutschen Unternehmen vernachlässigt. Oft können die Unternehmen die Risiken der Cyberkriminalität nicht abschätzen.' \
-        'Die Angst vor Cyberkriminalität ist meist nicht groß genug.'\
+        'Cyber Security wird in vielen deutschen Unternehmen vernachlässigt. Oft können die Unternehmen die Risiken der Cyberkriminalität nicht abschätzen. ' \
+        'Die Angst vor Cyberkriminalität ist meist nicht groß genug. '\
         'Betrachtet man im Gegenzug dazu erfasste Fälle von Cyberkriminalität in den letzten zehn Jahren in Deutschland, so kann man die '\
-        'Cyberkriminalität geradezu als Wachstumsbranche bezeichnen. Neben den Hobby-Hackern gibt es mittlerweile professionelle Anbieter, die ihre Hacker-Services' \
-        'als Dienstleistung anbieten.'\
-        'Besonders kleine und mittelständische Unternehmen stehen im Visier von Cyberkriminiellen. Denn diese haben meist unterdurchschnittliche Sicherheitsvorkehrungen.')
+        'Cyberkriminalität geradezu als Wachstumsbranche bezeichnen. Neben den Hobby-Hackern gibt es mittlerweile professionelle Anbieter, die ihre Hacker-Services ' \
+        'als Dienstleistung anbieten. '\
+        'Besonders kleine und mittelständische Unternehmen stehen im Visier von Cyberkriminellen. Denn diese haben meist unterdurchschnittliche Sicherheitsvorkehrungen.')
         einleitung.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
 
@@ -104,9 +104,9 @@ class PDF():
         heading2 = document.add_heading('Schaden durch Hacks', level = 1)
         heading3 = document.add_paragraph().add_run('Enstehung von Datenlecks')
         heading3.bold=True
-        info_db = document.add_paragraph('Daten sind ein wertvolles Gut. Unternehmen haben oft unmengen an Daten gespeichert, die für viele '\
-            'Hacker interessant sind. Größere Plattformen, die bspw. Kreditkartendaten oder Sozialversicherungsdaten gespeichert haben bieten '\
-            'sich für Hacker als besonders attraktiv an. Datenlecks können bspw. durch Phishing-Mails, infizierte USB-Sticks, Schwachstellen von Software, '\
+        info_db = document.add_paragraph('Daten sind ein wertvolles Gut. Unternehmen haben oft Unmengen an Daten gespeichert, die für viele '\
+            'Hacker interessant sind. Größere Plattformen, die bspw. Kreditkartendaten oder Sozialversicherungsdaten gespeichert haben, bieten '\
+            'sich für Hacker als besonders attraktiv an. Datenlecks können bspw. durch Phishing-Mails, infizierte USB-Sticks, Schwachstellen von Software '\
             'oder auch Mitarbeitende enstehen. (AVG, 2019)')
         info_db.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         document.add_picture('fig_lineplot.png', width=Inches(6.0))
@@ -115,10 +115,10 @@ class PDF():
         abbildung_1 = document.add_paragraph('Abbildung 1: Datenlecks über die letzten 8 Jahre inklusive Durchschnitt (Quelle: information ist beautiful, 2021a)')
         abbildung_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-        info_db2 = document.add_paragraph('In den letzten Jahre ist Summe der Schäden, die durch Datenlecks in den Unternehmen entstanden sind gestiegen (siehe dazu Abbildung 1 und Tabelle 1). '\
-            'Dies hat unter Anderem den Grund, dass Unternehmen immer häufiger Angegriffen werden und'
-            ' durch die Digitalisierung die Menge der Daten in den Unternehmen stetig steigt. Viele Daten die vor einigen Jahren noch lokal in den Unternhemen in Papierform '\
-            'vorlagen, werden heutzutage digitalisiert auf großen Servern gespeichert. Wo es Hackern früher noch gar nicht möglich war auf Daten zuzugreifen, besteht heut für diese ein rießiges Potenzial. '\
+        info_db2 = document.add_paragraph('In den letzten Jahren ist Summe der Schäden, die durch Datenlecks in den Unternehmen entstanden sind, gestiegen (siehe dazu Abbildung 1 und Tabelle 1). '\
+            'Dies hat unter anderem den Grund, dass Unternehmen immer häufiger angegriffen werden und'
+            ' durch die Digitalisierung die Menge der Daten in den Unternehmen stetig steigt. Viele Daten, die vor einigen Jahren noch lokal in den Unternehmen in Papierform '\
+            'vorlagen, werden heutzutage digitalisiert auf großen Servern gespeichert. Wo es Hackern früher noch gar nicht möglich war, auf Daten zuzugreifen, besteht heut für diese ein riesiges Potenzial. '\
             '')
         info_db2.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
@@ -127,13 +127,13 @@ class PDF():
         document.add_picture('fig_table.png', width=Inches(7.0))
         last_paragraph = document.paragraphs[-1] 
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Data Breaches von Jahr 2014 bis 2021 inklusive der Mittelwerte (Quelle: information ist beautiful, 2021a)')
+        table_1 = document.add_paragraph('Tabelle 1: Unternehmen mit dem höchsten Schaden durch Datenlecks von Jahr 2014 bis 2021 inklusive der Mittelwerte (Quelle: information ist beautiful, 2021a)')
         table_1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         document.add_picture('fig_bubblechart.png', width=Inches(6.0))
         last_paragraph = document.paragraphs[-1] 
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        abbildung_2 = document.add_paragraph('Abbildung 2: Data Breaches im Jahr 2021 (Quelle: information ist beautiful, 2021a)')
+        abbildung_2 = document.add_paragraph('Abbildung 2: Datenlecks im Jahr 2021 (Quelle: information ist beautiful, 2021a)')
         abbildung_2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         info_db3 = document.add_paragraph('Gerade bei größeren Unternehmen, die viele Daten speichern, sind die Schäden am höchsten. Haben es die Angreifer geschafft '\
@@ -147,11 +147,11 @@ class PDF():
         #Thema Cyber Attacken
         heading2 = document.add_heading('Cyber Attacken', level = 1)
         info_ca = document.add_paragraph('Hacker haben verschiedene Angriffsziele. Zunächst denkt man dabei an Hackerangriffe auf Systeme, bei '\
-            'dem der Angreifer die Schwächen des System ausnuzt. Allerdings können auch Menschen in das Ziel von Hackern geraten. Dabei ist das '\
+            'dem der Angreifer die Schwächen des Systems ausnutzt. Allerdings können auch Menschen in das Ziel von Hackern geraten. Dabei ist das '\
             'Ziel oft, Menschen zu manipulieren oder sie bestimmte Handlungen ausführen zu lassen, sodass der Angreifer Zugang zum System bekommt.')
         info_ca.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         mensch = atp.get_percentage_human()
-        info_percantage = 'Im Jahr', str(int(actual_year) - 1), 'ist die Aufteilung der Cyberattacken ', str(mensch), ' % Mensch und ', str(100 - mensch), ' % System.' 
+        info_percantage = 'Im Jahr ', str(int(actual_year) - 1), ' liegt die Verteilung der Cyberattacken bei ', str(mensch), ' % Mensch und ', str(100 - mensch), ' % System.' 
         info_ca1 = document.add_paragraph(info_percantage)
         info_ca1.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         document.add_picture('treemap.png', width=Inches(6.0))
@@ -161,7 +161,7 @@ class PDF():
         abbildung_3.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
         info_ca4 = document.add_paragraph('Systemschwächen sind häufig Ziele von Hackern. Dabei können alle möglichen Systeme angegriffen werden, '\
-            'die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden können externe Sicherheitsfirmen beauftragt werden, '\
+            'die mit dem Internet verbunden sind. Um mögliche Schwachstellen in Systemen zu finden, können externe Sicherheitsfirmen beauftragt werden, '\
             'die einen Angriff simuliert.')
         info_ca4.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         heading = document.add_paragraph().add_run('Angriffsvektor Mensch')
@@ -188,9 +188,9 @@ class PDF():
         document.add_paragraph('Böswilliger Insider: '+ str(insider) + ' %', style='List Bullet')
         document.add_paragraph('Versehentlicher Datenverlust/verlorenes Gerät: '+ str(datenlost) + ' %', style='List Bullet')
         document.add_paragraph('Kompromittierung von Geschäfts-E-Mails: '+ str(mail) + ' %', style='List Bullet')
-        info = document.add_paragraph('Im folgenden werden die zwei größten Angriffsvektoren beim Angriffvektor Mensch näher beschrieben.')
+        info = document.add_paragraph('Im Folgenden werden die zwei größten Angriffsvektoren beim Angriffsvektor Mensch näher beschrieben.')
         info.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY 
-        login = document.add_paragraph().add_run('Angriffsvektor Kompromittierte Anmeldedaten')
+        login = document.add_paragraph().add_run('Angriffsvektor kompromittierte Anmeldedaten')
         login.bold = True
         login = atp.get_information_login()
         login_info = document.add_paragraph(login)
@@ -199,7 +199,7 @@ class PDF():
         phishing = document.add_paragraph().add_run('Angriffsvektor Phishing')
         phishing.bold = True
         phishing = atp.get_information_phishing()
-        phishing_info = document.add_paragraph(phishing +'Mehr zu Phishing ist im folgenden Kapitel zu finden.' )
+        phishing_info = document.add_paragraph(phishing +' Mehr zu Phishing ist im folgenden Kapitel zu finden.' )
         phishing_info.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         
 
@@ -209,9 +209,9 @@ class PDF():
 
         #Thema Phishing
         heading3 = document.add_heading('Phishing', level = 1)
-        phishing_info2 = document.add_paragraph('Die meist verbreitesten Arten von Phishing sind, das Senden eines URL-Hyperlinks, die Anfrage einer Dateneingabe und ein an eine E-Mail angefügter Anhang. '\
-        'Dabei sind Phishing Anriffe am meisten verbreitet. Die Angreifer sind über die letzten Jahre immer erfinderischer geworden. Oft verstecken sich Angreifer hinter weit verbreitete und vertrauenswürdige Diensten und '\
-        'täuschen so ihre Opfer, indem sie sich als echt ausgeben. Zu den meist verwendeten Themen von Phishing gehören bspw. Mircosoft Teams-Anfragen, Coronavirus-Alarmmeldungen aber auch Starbucks-Bonus oder UPS-Versandbenachrichtugnen. '\
+        phishing_info2 = document.add_paragraph('Die meist verbreitetsten Arten von Phishing sind das Senden eines URL-Hyperlinks, die Anfrage einer Dateneingabe und ein an eine E-Mail angefügter Anhang. '\
+        'Dabei sind Phishing Angriffe am meisten verbreitet. Die Angreifer sind über die letzten Jahre immer erfinderischer geworden. Oft verstecken sich Angreifer hinter weitverbreiteten und vertrauenswürdigen Diensten und '\
+        'täuschen so ihre Opfer, indem sie sich als echt ausgeben. Zu den meist verwendeten Themen von Phishing gehören bspw. Microsoft Teams-Anfragen, Coronavirus-Alarmmeldungen, aber auch Starbucks-Bonus oder UPS-Versandbenachrichtigungen. '\
         'Oft versuchen Angreifer ihre Opfer mit raffinierten Themen wie kostenlosen Angeboten, Rabatten oder Ticketvorverkäufen zu überzeugen. (Proofpoint, 2021)')
         phishing_info2.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         document.add_picture('phishing_link.png', width=Inches(3.0))
@@ -219,8 +219,8 @@ class PDF():
         last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
         text_link = pg.get_text_for_dounut('link').replace(' <br>', '')
         abbildung_5 = document.add_paragraph().add_run(str(text_link))
-        abbildung_5.alignment = WD_ALIGN_PARAGRAPH.CENTER
         abbildung_5.bold=True
+        abbildung_5.alignment = WD_ALIGN_PARAGRAPH.CENTER
         abbildung_5 = document.add_paragraph('Abbildung 5: Phishing via Link (Quelle: Proofpoint, 2021)')
         abbildung_5.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
@@ -245,10 +245,10 @@ class PDF():
         abbildung_7.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
         mean_branche = pg.get_mean('Branche')
         mean_abteilung = pg.get_mean('Abteilung')
-        phishing_info2 = document.add_paragraph('Im Folgenden werden die Fehlerquoten für 20 verschiedene Branchen und Abteilungen dargestellt.' \
-        'Die Fehlerquote bezieht sich dabei auf das Fehlverhalten bei Phishing-Angriffen durch bspw. auf öffnen eines URL-Hyperlinks. (Proofpoint, 2021)'
+        phishing_info2 = document.add_paragraph('Im Folgenden werden die Fehlerquoten für 20 verschiedene Branchen und Abteilungen dargestellt. ' \
+        'Die Fehlerquote bezieht sich dabei auf das Fehlverhalten bei Phishing-Angriffen durch bspw. auf Öffnen eines URL-Hyperlinks. '
         'Der Gesamtdurchschnitt über alle Branchen hinweg lag bei ' + str(mean_branche) + ' % (siehe Abb. 7). '\
-        'Bei den Abteilungen lag der Durchschnitt bei ' + str(mean_abteilung) + '% (siehe Abb. 8).')
+        'Bei den Abteilungen lag der Durchschnitt bei ' + str(mean_abteilung) + '% (siehe Abb. 8). (Proofpoint, 2021)')
         phishing_info2.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         document.add_picture('fail_bar_mark.png', width=Inches(5.0))
         last_paragraph = document.paragraphs[-1] 
@@ -272,20 +272,20 @@ class PDF():
 
         #Thema Passwortsicherheit
         heading4 = document.add_heading('Passwortsicherheit', level = 1)
-        info_psw = document.add_paragraph('Ein häufiger Angriffsvektor in Bezug auf Passwörter ist das erraten von diesen durch ausprobieren '\
-            'Dabei wird durch systematisches Ausprobieren jeglicher Kombinationen versucht das richtige Passwort zu ermitteln. Diese Art von '\
+        info_psw = document.add_paragraph('Ein häufiger Angriffsvektor in Bezug auf Passwörter ist das Erraten von diesen durch Ausprobieren '\
+            'Dabei wird durch systematisches Ausprobieren jeglicher Kombinationen versucht, das richtige Passwort zu ermitteln. Diese Art von '\
             'Angriff wird auch Brute-Force-Angriff genannt. Hierbei werden alle Kombinationen von möglichen Passwörtern hintereinander automatisch '\
-            'ausprobiert, bis das korrekte Passwort gefunden wurde. Meist führt dieses Verfahren zum Erfolg, wenn die Anzahl der möglichen Kombinationen, '\
-            'klein sind. So können alle Möglichkeiten in nur kurzer Zeit ausprobiert werden. Aus diesem Grund sollte die Anzahl der Zeichen so groß wie '\
+            'ausprobiert, bis das korrekte Passwort gefunden wurde. Meist führt dieses Verfahren zum Erfolg, wenn die Anzahl der möglichen Kombinationen '\
+            'klein sind. So können alle Möglichkeiten in nur kurzer Zeit ausprobiert werden. Aus diesem Grund sollte die Anzahl der Zeichen so groß '\
             'wie möglich sein. Außerdem sollte das Passwort eine definierte Länge haben. So kann die Zeit bzw. Rechenleistung, die gebraucht wird, um ein Passwort '\
-            'zu identifizieren, den Nutzen das Passwort zu kennen, übersteigen. (Pohlmann, 2019)')
+            'zu identifizieren, den Nutzen, das Passwort zu kennen, übersteigen. (Pohlmann, 2019)')
         info_psw.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
         psw_header2 =  document.add_paragraph().add_run('Verwendetes Alphabet und die Länge von Passwörtern')
         psw_header2.bold = True
 
-        info_psw2 = document.add_paragraph('Durch das verwendete Alphanet und dabei nutzbaren Zeichen wird die Anzahl der möglichen Kombinationenb bei einer bestimmten '\
-            'Passwortlänge berechnet. Die Passwortlänge bezieht sich dabei auf die Anzahl der genutzten Elemente. Die Komplexität der automatischen Suche wird due die Anzahl der möglichen '\
+        info_psw2 = document.add_paragraph('Durch das verwendete Alphabet und dabei nutzbaren Zeichen wird die Anzahl der möglichen Kombinationen bei einer bestimmten '\
+            'Passwortlänge berechnet. Die Passwortlänge bezieht sich dabei auf die Anzahl der genutzten Elemente. Die Komplexität der automatischen Suche wird durch die Anzahl der möglichen '\
             'Kombinationen beschrieben. Siehe dazu Tabelle 2. (Pohlmann, 2019)')
         info_psw2.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
         formel_psw = document.add_paragraph('Mögliche Kombinationen = Zeichenanzahl')
@@ -351,6 +351,9 @@ class PDF():
 
         info_psw3 = document.add_paragraph('In Tabelle 2 wird deutlich, dass die Länge des Passworte und auch die Anzahl der Zeichen der verwendeten Alphabete eine '\
             'ausschlaggebende Rolle spielen')
+        
+        #Seitenumbruch
+        document.add_page_break()
 
         psw_header3 =  document.add_paragraph().add_run('Meist verwendete Passwörter')
         psw_header3.bold = True
