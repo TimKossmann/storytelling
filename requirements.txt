@@ -8,4 +8,4 @@ python-docx
 pywin32
 pyhton-pptx
 xlsx-writer
-
+docx2pdf
