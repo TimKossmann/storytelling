@@ -8,7 +8,6 @@ from docx.shared import Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.shared import RGBColor
 import os
-import win32com.client
 import datetime
 import plotly.io as pio
 import plotly
@@ -18,6 +17,7 @@ from data_breaches_bar_chart_bubble_plot_actual_year import Charts_DataBreaches
 from data_breaches_attack_vectors_treemap import Chart_AttackVectors
 from phishing_graphs import Phishing_Graphs
 from passwords_wordcloud import Chart_WordCloud
+from docx2pdf import convert
 
 
 
@@ -382,6 +382,8 @@ class PDF():
         doc.SaveAs(outputFile, FileFormat=wdFormatPDF)
         doc.Close()
         word.Quit()'''
+        
+        convert('LaCTiS_Report.docx','LaCTiS_Report.pdf')
 
 if __name__ == "__main__":
     pdf = PDF()

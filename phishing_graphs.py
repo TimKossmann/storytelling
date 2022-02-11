@@ -36,8 +36,9 @@ class Phishing_Graphs():
         #df.reset_index(drop=True, inplace=True)
 
         for index, row in df.iterrows():
-            print(row["Name"])
-            res.append({"label": row["Name"], "value": row["Name"]})
+            res.append({"label": row["Name"].replace("- ", ""), "value": row["Name"]})
+        
+        
         return res
 
     def update_mark_bar(self, mark_name):
@@ -51,6 +52,13 @@ class Phishing_Graphs():
         self.type = type
     
     def get_fail_bar(self, type_name, mark, darkmode=True):
+        if mark != None:
+            mark = mark.replace(" und ", "& ")
+            
+            mark = mark.replace(" ", "<br>")
+            mark = mark.replace("&", " &")
+            mark = mark.replace("/", "/<br>")
+
         if darkmode:
             color = "white"
             avg_line_color = "rgba(255,255,255,0.7)"
@@ -63,6 +71,7 @@ class Phishing_Graphs():
         df["Name"] = df["Name"].str.replace(" ", "<br>")
         df["Name"] = df["Name"].str.replace("&", " &")
         df["Name"] = df["Name"].str.replace("/", "/<br>")
+
         df.reset_index(drop=True, inplace=True)
         color_map = {}
         for index, row in df.iterrows():

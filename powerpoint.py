@@ -63,14 +63,19 @@ class Powerpoint():
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Kosten die durch Datenlecks entstehen steigen Jahr für Jahr an'
+        p.text = 'Kosten die durch Datenpannen entstehen steigen Jahr für Jahr'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Oft können solche Attacken verhindert werden'
+        p.text = 'Durch die digitalisierung werden Daten immer wertvoller'
+        p.level = 0
+
+        p = tf.add_paragraph()
+        p.text = 'Es werden immer mehr Daten gespeichert'
         p.level = 0
         p = tf.add_paragraph()
-        p.text = 'Mehr Daten werden gespeichert -> Mehr Schaden kann dadurch angerichtet werden'
+        p = tf.add_paragraph()
+        p.text = 'Oft können solche Attacken abgewehrt werden!'
         p.level = 0
 
         bubble_side = self.pp.slides.add_slide(self.get_picture_img_layout())
@@ -85,54 +90,73 @@ class Powerpoint():
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Kosten die durch Datenlecks entstehen steigen Jahr für Jahr an'
+        p.text = 'Vor allem Software-Firmen sind betroffen'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Oft können solche Attacken verhindert werden'
+        p.text = 'Die Daten der Kunden sind ihr größtes Gut'
         p.level = 0
+
         p = tf.add_paragraph()
-        p.text = 'Mehr Daten werden gespeichert -> Mehr Schaden kann dadurch angerichtet werden'
+        p = tf.add_paragraph()
+        p.text = 'Nicht nur für Softwareunternehmen relevant\n-> Datenpannen ziehen auch Image Schäden nach sich'
         p.level = 0
+
+        title_slide = self.pp.slides.add_slide(self.pp.slide_layouts[5])
+        title = title_slide.placeholders[0]
+        title.text = "Hackingmethoden"
 
 
         hacker_attacks = self.pp.slides.add_slide(self.pp.slide_layouts[2])
         title = hacker_attacks.placeholders[0]
-        title.text = "Wie greifen Hacker Unternehmen am häufigsten an?"
+        title.text = "Welche Schwachstelle führt bei Hackern zum Erfolg?"
         placeholder = hacker_attacks.placeholders[1]
         placeholder.insert_picture("treemap_pp.png")
         sub_text = hacker_attacks.placeholders[2]
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Mensch ist öfter als 50% das Angriffsziel von Hackern'
+        percentage_human = self.atp.get_percentage_human()
+        p.text = f'Mensch ist in {percentage_human}% der Fällen die Schwachstelle'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Systembedingt gibt es auch einige Angriffe die aber durch technik verhindert werden können'
+        p.text = 'Hackerangriffe die rein auf das System abzielen gibt es seltener als gedacht wird'
+        p.level = 0
+
+        p = tf.add_paragraph()
+        p = tf.add_paragraph()
+        p.text = 'Durch Schulungen kann die Schwachstelle Mensch deutlich verbessert werden'
         p.level = 0
 
         hacker_human_attacks = self.pp.slides.add_slide(self.pp.slide_layouts[2])
         title = hacker_human_attacks.placeholders[0]
-        title.text = "Was gibt es für Angriffsarten, die auf den Mensch abzielen?"
+        title.text = "Was sind die erfogreichsten Angriffsarten, mit der Schwachstelle Mensch?"
         placeholder = hacker_human_attacks.placeholders[1]
         placeholder.insert_picture("treemap_mensch_pp.png")
         sub_text = hacker_human_attacks.placeholders[2]
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Potentiale für Hacker sind die Komprimittierten oder Schwachen Anmeldedaten von Mitarbeitern und das Versenden von Phishing-Mails'
+        p.text = 'Die größten Potentiale für Hacker sind die komprimittierten oder schwachen Anmeldedaten von Mitarbeitern und das Versenden von Phishing-Mails'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Schwachstellen können hierbei im Grunde einfach behoben werden'
+        p.text = 'Meistens ist es Unwissenheit, die zu Fehlern führt'
         p.level = 0
 
+        p = tf.add_paragraph()
+        p = tf.add_paragraph()
+        p.text = 'Sensibilisierung kann hier schon ein wirksames Mittel sein'
+        p.level = 0
+
+        title_slide = self.pp.slides.add_slide(self.pp.slide_layouts[5])
+        title = title_slide.placeholders[0]
+        title.text = "Phishing"
 
         phishing_slide = self.pp.slides.add_slide(self.pp.slide_layouts[1])
         title = phishing_slide.placeholders[0]
-        title.text = "Was wollen Phishing Angriffe?"
-        
+        title.text = "Was wollen Phishing Mails?"
         
         added_img = 0
         added_txt = 0
@@ -148,42 +172,56 @@ class Powerpoint():
                 added_img += 1
             if "OBJECT" in plc_type:
                 tf = plch.text_frame
+                tf.clear()
                 p = tf.add_paragraph()
                 p.text = img_txt[added_txt].replace("<br>", "")
                 added_txt += 1
 
         phishing_branch = self.pp.slides.add_slide(self.pp.slide_layouts[3])
         title = phishing_branch.placeholders[0]
-        title.text = "Welche Branchen sind besonders betroffen von Phishing?"
+        title.text = "Welche Branchen fallen auf Phishing rein?"
         placeholder = phishing_branch.placeholders[1]
         placeholder.insert_picture("fail_bar_mark_pp.png")
         sub_text = phishing_branch.placeholders[2]
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Potentiale für Hacker sind die Komprimittierten oder Schwachen Anmeldedaten von Mitarbeitern und das Versenden von Phishing-Mails'
+        p.text = 'Branchen die digital sind'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Schwachstellen können hierbei im Grunde einfach behoben werden'
+        p.text = 'Branchen die interessante Daten haben'
         p.level = 0
+
+        p = tf.add_paragraph()
+        p = tf.add_paragraph()
+        p.text = "Branchen die beliebte Ziele sind, sollten auch mehr schulen"
 
         phishing_branch = self.pp.slides.add_slide(self.pp.slide_layouts[3])
         title = phishing_branch.placeholders[0]
-        title.text = "Welche Abteilungen sind besonders betroffen von Phishing?"
+        title.text = "Welche Abteilungen sind anfällig für Phishing?"
         placeholder = phishing_branch.placeholders[1]
         placeholder.insert_picture("fail_bar_type_name_pp.png")
         sub_text = phishing_branch.placeholders[2]
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Potentiale für Hacker sind die Komprimittierten oder Schwachen Anmeldedaten von Mitarbeitern und das Versenden von Phishing-Mails'
+        p.text = 'Abteilungen die viel Kommunikation betreiben, wie Vetrieb und Marketing sollte beobachtet werden'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Schwachstellen können hierbei im Grunde einfach behoben werden'
+        p.text = 'Gebäudemanagement wird nicht so viel geschult, da sie nicht so oft Phishing Mails erhalten'
+        p.level = 0
+
+
+        p = tf.add_paragraph()
+        p = tf.add_paragraph()
+        p.text = 'Wichtig alle Abteilungen zu schulen, denn eine Kette ist nur so stark, wie ihr schwächstes Glied'
         p.level = 0
         
+        title_slide = self.pp.slides.add_slide(self.pp.slide_layouts[5])
+        title = title_slide.placeholders[0]
+        title.text = "Passwortsicherheit"
 
         password_slide = self.pp.slides.add_slide(self.pp.slide_layouts[4])
         title = password_slide.placeholders[0]
@@ -194,13 +232,17 @@ class Powerpoint():
         tf = sub_text.text_frame
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Potentiale für Hacker sind die Komprimittierten oder Schwachen Anmeldedaten von Mitarbeitern und das Versenden von Phishing-Mails'
+        p.text = 'Kurze Passwörter\n-> Die Passwortlänge potentiert die Stärke des Passworts'
         p.level = 0
 
         p = tf.add_paragraph()
-        p.text = 'Die größten Schwachstellen können hierbei im Grunde einfach behoben werden'
+        p.text = 'Passwörter mit wenig Zeichenvariationen\n-> Wenn man Sonderzeichen nutzt erhöht sich die Zahl der Möglichen Zeichen direkt um 32'
         p.level = 0
         
+        p = tf.add_paragraph()
+        p.text = 'Existierende Wörter\n-> Hacker verwenden Wörterbücher um Passwörter zu knacken'
+        p.level = 0 
+
         """
         placeholder = first_slide.placeholders[1]
         print(placeholder.placeholder_format.type)
@@ -213,7 +255,7 @@ class Powerpoint():
         placeholder.text = 'Fail Bar \nZweiter Text'
         #print(len(first_slide.placeholders))"""
 
-        self.pp.save("Powerpoint.pptx")
+        self.pp.save("Cyber_Security_LaCTiS.pptx")
 
 if __name__ == "__main__":
     pp = Powerpoint()

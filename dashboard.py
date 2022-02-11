@@ -1,6 +1,10 @@
+import imp
+from turtle import width
 import dash
 from dash import dcc, html, Input, Output
 import plotly.express as px
+from powerpoint import Powerpoint
+from word import PDF
 
 
 import pandas as pd
@@ -13,6 +17,7 @@ from tab_pages.password import PasswordPage
 from tab_pages.data_breaches_costs import DataBreachesPage
 import tab_pages.phishing as ph
 
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 dbr = Charts_DataBreaches() # Klasse Charts_DataBreaches aufrufen
@@ -24,63 +29,83 @@ pp = PasswordPage(app)
 dbav = AttackVectorsPage(app) 
 dbp = DataBreachesPage(app)
 phishing = ph.PhishingPage() 
+pptx = Powerpoint()
+pdf = PDF()
 
 colors = {
     'background': '#111111',
     'text': '#7FDBFF'
 }
 
-app.layout = html.Div(style={'backroudColor': 'green'}, children=[
+app.layout = html.Div(children=[
     html.Div([
         html.Header(children=[
             html.Div(
                 id="app-header",
                 children=[
-                    html.H1(
-                        id="app-title",
-                        children='Welcome to LaCTiS',
-                        style={
-                            
-                        }
-                    ),
-            
-                    dcc.Tabs(
-                        id="tabs-container", 
-                        value='tab_databreaches', 
-                        parent_className='custom-tabs',
-
+                    html.Img(src=app.get_asset_url('LaCTiS_Logo.png'), id="logo"),
+                    html.Div(
+                        id="no-logo-layer",
                         children=[
-                            dcc.Tab(
-                                className="custom-tab", 
-                                label='Schaden durch Hacks', 
-                                value='tab_databreaches',
-                                selected_className='custom-tab--selected'
+                            html.H1(
+                                id="app-title",
+                                children='Welcome to LaCTiS',
+                                style={
+                                    
+                                }
                             ),
-                            dcc.Tab(
-                                className="custom-tab", 
-                                label='Hackermethoden', 
-                                value='tab_methods',
-                                selected_className='custom-tab--selected'
-                            ),
-                            dcc.Tab(
-                                className="custom-tab", 
-                                label='Phishing', 
-                                value='tab_phishing',
-                                selected_className='custom-tab--selected'
-                            ),
-                            dcc.Tab(
-                                className="custom-tab", 
-                                label='Passwortsicherheit', 
-                                value='tab_password',
-                                selected_className='custom-tab--selected'
-                            ),
+                    
+                            dcc.Tabs(
+                                id="tabs-container", 
+                                value='tab_databreaches', 
+                                parent_className='custom-tabs',
+
+                                children=[
+                                    dcc.Tab(
+                                        className="custom-tab", 
+                                        label='Schaden durch Hacks', 
+                                        value='tab_databreaches',
+                                        selected_className='custom-tab--selected'
+                                    ),
+                                    dcc.Tab(
+                                        className="custom-tab", 
+                                        label='Hackermethoden', 
+                                        value='tab_methods',
+                                        selected_className='custom-tab--selected'
+                                    ),
+                                    dcc.Tab(
+                                        className="custom-tab", 
+                                        label='Phishing', 
+                                        value='tab_phishing',
+                                        selected_className='custom-tab--selected'
+                                    ),
+                                    dcc.Tab(
+                                        className="custom-tab", 
+                                        label='Passwortsicherheit', 
+                                        value='tab_password',
+                                        selected_className='custom-tab--selected'
+                                    ),
+                                ]
+                            ),  
                         ]
-                    ),  
+                    ),
+                    
                 ]
             ),
         ]),
         html.Br(),html.Br(),html.Br(),
-        html.Div(id="tabs-content")
+        html.Div(id="tabs-content"),
+        html.Br(),
+        html.Div(
+            className="download-wrapper",
+            children=
+            [
+                html.Button("PPTX", className="btn_csv", id="powerpoint_btn", style={'margin-right':'20px'}),
+                dcc.Download(id="download-powerpoint"),
+                html.Button("PDF", className="btn_csv", id="pdf_btn"),
+                dcc.Download(id="download-pdf"),
+            ]
+        )  
     ]),
      
 ])
@@ -102,6 +127,24 @@ def render_content(tab):
         return dbp.get_layout()
     elif tab == 'tab_phishing':
         return phishing.get_layout()
+
+@app.callback(
+    Output("download-powerpoint", "data"),
+    Input("powerpoint_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    pptx.create_pp()
+    return dcc.send_file('Cyber_Security_LaCTiS.pptx')
+
+@app.callback(
+    Output("download-pdf", "data"),
+    Input("pdf_btn", "n_clicks"),
+    prevent_initial_call=True,
+)
+def download(n_clicks):
+    pdf.create_pdf()
+    return dcc.send_file('LaCTiS_Report.pdf')
 
 ############# DataBreaches-Tab #############################
 @app.callback(
@@ -180,6 +223,7 @@ def display_attackVectors(clickData):
     Output('mark-dropdown-wrapper', 'children'),
     Input('phishing-dropdown', 'value'))
 def display_attackVectors(clickData):
+    
     return dcc.Dropdown(
                 id='mark-dropdown',
                 options=phishing.pg.get_dropdown_list(clickData),
